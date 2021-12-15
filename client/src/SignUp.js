@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { Button, Form, Container, Row, Col } from 'react-bootstrap';
+import ErrorAlert from './ErrorAlert';
 
 const SignUp = ({ setCurrentUser }) => {
 
+  const [errors, setErrors] = useState(null)
   const [formData, setFormData ] = useState({
     first_name: '', 
     last_name: '',
@@ -17,6 +19,7 @@ const SignUp = ({ setCurrentUser }) => {
 
   const handleSignUpSubmit = (e) => {
     e.preventDefault()
+    setErrors(null)
     const user = {
       name: `${formData.first_name} ${formData.last_name}`,
       height: parseInt(formData.height_feet * 12) + parseInt(formData.height_inches),
@@ -36,17 +39,19 @@ const SignUp = ({ setCurrentUser }) => {
         res.json()
         .then(setCurrentUser)
       }else{
-        debugger
+        res.json().then(e => setErrors(e))
       }
     })
   }
 
+  console.log("errors", errors)
   return (
     <Container>
       <br></br>
       <Form>
         <Row>
           <h1>Sign Up</h1>
+          { errors ? <ErrorAlert errors={errors.errors} /> : null }
         </Row>
         <Row>
           <Col>
@@ -142,6 +147,13 @@ const SignUp = ({ setCurrentUser }) => {
             placeholder="Confirm your password" 
             value={formData.password_confirmation}
             onChange={e => setFormData({...formData, password_confirmation: e.target.value})}
+          />
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="passwordConfirmation">
+          <Form.Label>Confirm Password</Form.Label>
+          <Form.Control 
+            type="date" 
+            placeholder="Confirm your password" 
           />
         </Form.Group>
         <Button 
