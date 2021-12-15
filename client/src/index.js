@@ -1,20 +1,13 @@
 import React from 'react';
 import { render } from "react-dom";
-import {
-  BrowserRouter,
-  Routes,
-  Route
-} from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 render(
   <BrowserRouter>
-    <Routes>
-      <Route path="/" element={<App />}>
-      </Route>
-    </Routes>
+      <App />
   </BrowserRouter>,
   document.getElementById("root")
 );
