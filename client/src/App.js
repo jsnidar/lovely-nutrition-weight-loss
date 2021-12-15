@@ -9,6 +9,15 @@ function App() {
 
   const [currentUser, setCurrentUser] = useState({})
 
+  useEffect(() => {
+    // auto-login
+    fetch("/me").then((r) => {
+      if (r.ok) {
+        r.json().then((user) => setUser(user));
+      }
+    });
+  }, []);
+  
   return (
     <div>
       <NavBar />
@@ -23,6 +32,12 @@ function App() {
           path='/sign-up' 
           element={
             <SignUp setCurrentUser={setCurrentUser} />
+          } 
+        />
+        <Route 
+          path='/log-in' 
+          element={
+            <SignIn onSignIn={setCurrentUser} />
           } 
         />
       </Routes>

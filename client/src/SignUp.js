@@ -44,7 +44,6 @@ const SignUp = ({ setCurrentUser }) => {
     })
   }
 
-  console.log("errors", errors)
   return (
     <Container>
       <br></br>
@@ -147,13 +146,6 @@ const SignUp = ({ setCurrentUser }) => {
             placeholder="Confirm your password" 
             value={formData.password_confirmation}
             onChange={e => setFormData({...formData, password_confirmation: e.target.value})}
-          />
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="passwordConfirmation">
-          <Form.Label>Confirm Password</Form.Label>
-          <Form.Control 
-            type="date" 
-            placeholder="Confirm your password" 
           />
         </Form.Group>
         <Button 
