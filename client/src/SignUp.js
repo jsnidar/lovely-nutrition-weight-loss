@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Form, Container, Row, Col } from 'react-bootstrap';
 
-const SignUp = () => {
+const SignUp = ({ setCurrentUser }) => {
 
   const [formData, setFormData ] = useState({
     first_name: '', 
@@ -11,12 +11,34 @@ const SignUp = () => {
     email: '',
     email_confirmation: '',
     password: '',
-    password_confirmation: ''
+    password_confirmation: '',
+    username: ''
   })
 
   const handleSignUpSubmit = (e) => {
     e.preventDefault()
-    debugger
+    const user = {
+      name: `${formData.first_name} ${formData.last_name}`,
+      height: parseInt(formData.height_feet * 12) + parseInt(formData.height_inches),
+      email: formData.email,
+      email_confirmation: formData.email_confirmation,
+      password: formData.password,
+      password_confirmation: formData.password_confirmation,
+      username: formData.username
+    }
+    fetch('/users', {
+      method: "POST",
+      headers: {'Content-Type':'application/json'},
+      body:JSON.stringify(user)
+    })
+    .then(res => {
+      if(res.ok){
+        res.json()
+        .then(setCurrentUser)
+      }else{
+        debugger
+      }
+    })
   }
 
   return (
@@ -39,7 +61,7 @@ const SignUp = () => {
             </Form.Group>
           </Col>
           <Col>
-            <Form.Group className="mb-3" controlId="firstName">
+            <Form.Group className="mb-3" controlId="lastName">
               <Form.Label>Last Name</Form.Label>
               <Form.Control 
                 type="text" 
@@ -53,7 +75,18 @@ const SignUp = () => {
         <Form.Label>Height</Form.Label>
         <Row>
           <Col>
-            <Form.Group className="mb-3" controlId="height">
+            <Form.Group className="mb-3" controlId="username">
+              <Form.Label>Username</Form.Label>
+              <Form.Control 
+                type="text" 
+                placeholder=""
+                value={formData.username}
+                onChange={e => setFormData({...formData, username: e.target.value})}
+              />
+            </Form.Group>
+          </Col>
+          <Col>
+            <Form.Group className="mb-3" controlId="heightFeet">
               <Form.Label>Feet</Form.Label>
               <Form.Control 
                 type="number" 
@@ -64,7 +97,7 @@ const SignUp = () => {
             </Form.Group>
           </Col>
           <Col>
-            <Form.Group className="mb-3" controlId="height">
+            <Form.Group className="mb-3" controlId="heightInches">
               <Form.Label>Inches</Form.Label>
               <Form.Control 
                 type="number" 
