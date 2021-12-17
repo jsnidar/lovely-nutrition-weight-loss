@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Form, Container, Row, Col } from 'react-bootstrap';
 import ErrorAlert from './ErrorAlert';
+import { useNavigate } from 'react-router-dom';
 
 const SignUp = ({ setCurrentUser }) => {
 
@@ -16,6 +17,7 @@ const SignUp = ({ setCurrentUser }) => {
     password_confirmation: '',
     username: ''
   })
+  let navigate = useNavigate()
 
   const handleSignUpSubmit = (e) => {
     e.preventDefault()
@@ -29,7 +31,7 @@ const SignUp = ({ setCurrentUser }) => {
       password_confirmation: formData.password_confirmation,
       username: formData.username
     }
-    fetch('/users', {
+    fetch('/signup', {
       method: "POST",
       headers: {'Content-Type':'application/json'},
       body:JSON.stringify(user)
@@ -37,7 +39,8 @@ const SignUp = ({ setCurrentUser }) => {
     .then(res => {
       if(res.ok){
         res.json()
-        .then(setCurrentUser)
+        .then(user => setCurrentUser(user))
+        .then(navigate('/'))
       }else{
         res.json().then(e => setErrors(e))
       }
@@ -45,118 +48,121 @@ const SignUp = ({ setCurrentUser }) => {
   }
 
   return (
-    <Container>
-      <br></br>
-      <Form>
-        <Row>
-          <h1>Sign Up</h1>
-          { errors ? <ErrorAlert errors={errors.errors} /> : null }
-        </Row>
-        <Row>
-          <Col>
-            <Form.Group className="mb-3" controlId="firstName">
-              <Form.Label>First Name</Form.Label>
-              <Form.Control 
-                type="text" 
-                placeholder=""
-                value={formData.first_name}
-                onChange={e => setFormData({...formData, first_name: e.target.value})}
-              />
-            </Form.Group>
-          </Col>
-          <Col>
-            <Form.Group className="mb-3" controlId="lastName">
-              <Form.Label>Last Name</Form.Label>
-              <Form.Control 
-                type="text" 
-                placeholder=""
-                value={formData.last_name}
-                onChange={e => setFormData({...formData, last_name: e.target.value})}
-              />
-            </Form.Group>
-          </Col>
-        </Row>
-        <Form.Label>Height</Form.Label>
-        <Row>
-          <Col>
-            <Form.Group className="mb-3" controlId="username">
-              <Form.Label>Username</Form.Label>
-              <Form.Control 
-                type="text" 
-                placeholder=""
-                value={formData.username}
-                onChange={e => setFormData({...formData, username: e.target.value})}
-              />
-            </Form.Group>
-          </Col>
-          <Col>
-            <Form.Group className="mb-3" controlId="heightFeet">
-              <Form.Label>Feet</Form.Label>
-              <Form.Control 
-                type="number" 
-                placeholder="Enter feet"
-                value={formData.height_feet}
-                onChange={e => setFormData({...formData, height_feet: e.target.value})}
-              />
-            </Form.Group>
-          </Col>
-          <Col>
-            <Form.Group className="mb-3" controlId="heightInches">
-              <Form.Label>Inches</Form.Label>
-              <Form.Control 
-                type="number" 
-                placeholder="Enter inches"
-                value={formData.height_inches}
-                onChange={e => setFormData({...formData, height_inches: e.target.value})}
-              />
-            </Form.Group>
-          </Col>
-        </Row>
-        <Form.Group className="mb-3" controlId="email">
-          <Form.Label>Email address</Form.Label>
-          <Form.Control 
-            type="email" 
-            placeholder="name@example.com" 
-            value={formData.email}
-            onChange={e => setFormData({...formData, email: e.target.value})}
-          />
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="emailConfirmation">
-          <Form.Label>Confirm email address</Form.Label>
-          <Form.Control 
-            type="email" 
-            placeholder="name@example.com" 
-            value={formData.email_confirmation}
-            onChange={e => setFormData({...formData, email_confirmation: e.target.value})}
-          />
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="password">
-          <Form.Label>Create Password</Form.Label>
-          <Form.Control 
-            type="password" 
-            placeholder="Create a password" 
-            value={formData.password}
-            onChange={e => setFormData({...formData, password: e.target.value})}
-          />
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="passwordConfirmation">
-          <Form.Label>Confirm Password</Form.Label>
-          <Form.Control 
-            type="password" 
-            placeholder="Confirm your password" 
-            value={formData.password_confirmation}
-            onChange={e => setFormData({...formData, password_confirmation: e.target.value})}
-          />
-        </Form.Group>
-        <Button 
-          variant="warning" 
-          type="submit"
-          onClick={e => handleSignUpSubmit(e)}
-        >
-          Submit
-        </Button>
-      </Form> 
-    </Container>
+    <div>
+      {/* <NavBar /> */}
+      <Container>
+        <br></br>
+        <Form>
+          <Row>
+            <h1>Sign Up</h1>
+            { errors ? <ErrorAlert errors={errors.errors} /> : null }
+          </Row>
+          <Row>
+            <Col>
+              <Form.Group className="mb-3" controlId="firstName">
+                <Form.Label>First Name</Form.Label>
+                <Form.Control 
+                  type="text" 
+                  placeholder=""
+                  value={formData.first_name}
+                  onChange={e => setFormData({...formData, first_name: e.target.value})}
+                />
+              </Form.Group>
+            </Col>
+            <Col>
+              <Form.Group className="mb-3" controlId="lastName">
+                <Form.Label>Last Name</Form.Label>
+                <Form.Control 
+                  type="text" 
+                  placeholder=""
+                  value={formData.last_name}
+                  onChange={e => setFormData({...formData, last_name: e.target.value})}
+                />
+              </Form.Group>
+            </Col>
+          </Row>
+          <Form.Label>Height</Form.Label>
+          <Row>
+            <Col>
+              <Form.Group className="mb-3" controlId="username">
+                <Form.Label>Username</Form.Label>
+                <Form.Control 
+                  type="text" 
+                  placeholder=""
+                  value={formData.username}
+                  onChange={e => setFormData({...formData, username: e.target.value})}
+                />
+              </Form.Group>
+            </Col>
+            <Col>
+              <Form.Group className="mb-3" controlId="heightFeet">
+                <Form.Label>Feet</Form.Label>
+                <Form.Control 
+                  type="number" 
+                  placeholder="Enter feet"
+                  value={formData.height_feet}
+                  onChange={e => setFormData({...formData, height_feet: e.target.value})}
+                />
+              </Form.Group>
+            </Col>
+            <Col>
+              <Form.Group className="mb-3" controlId="heightInches">
+                <Form.Label>Inches</Form.Label>
+                <Form.Control 
+                  type="number" 
+                  placeholder="Enter inches"
+                  value={formData.height_inches}
+                  onChange={e => setFormData({...formData, height_inches: e.target.value})}
+                />
+              </Form.Group>
+            </Col>
+          </Row>
+          <Form.Group className="mb-3" controlId="email">
+            <Form.Label>Email address</Form.Label>
+            <Form.Control 
+              type="email" 
+              placeholder="name@example.com" 
+              value={formData.email}
+              onChange={e => setFormData({...formData, email: e.target.value})}
+            />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="emailConfirmation">
+            <Form.Label>Confirm email address</Form.Label>
+            <Form.Control 
+              type="email" 
+              placeholder="name@example.com" 
+              value={formData.email_confirmation}
+              onChange={e => setFormData({...formData, email_confirmation: e.target.value})}
+            />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="password">
+            <Form.Label>Create Password</Form.Label>
+            <Form.Control 
+              type="password" 
+              placeholder="Create a password" 
+              value={formData.password}
+              onChange={e => setFormData({...formData, password: e.target.value})}
+            />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="passwordConfirmation">
+            <Form.Label>Confirm Password</Form.Label>
+            <Form.Control 
+              type="password" 
+              placeholder="Confirm your password" 
+              value={formData.password_confirmation}
+              onChange={e => setFormData({...formData, password_confirmation: e.target.value})}
+            />
+          </Form.Group>
+          <Button 
+            variant="warning" 
+            type="submit"
+            onClick={e => handleSignUpSubmit(e)}
+          >
+            Submit
+          </Button>
+        </Form> 
+      </Container>
+    </div>
   );
 }
 

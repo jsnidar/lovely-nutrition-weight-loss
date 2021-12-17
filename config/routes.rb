@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   
-  post "/users", to: "users#create"
+  post "/signup", to: "users#create"
   get "/me", to: "users#show"
   patch "/users/:id", to: "users#update"
   delete "users/:id", to: "users#destroy"

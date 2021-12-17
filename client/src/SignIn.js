@@ -1,9 +1,11 @@
-import React from 'react';
-import { Form, Container } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Form, Container, Row, Col, Button } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 import ErrorAlert from './ErrorAlert';
 
 const SignIn = ({ onSignIn }) => {
 
+  let navigate = useNavigate()
   const [errors, setErrors] = useState(null)
   const [formData, setFormData ] = useState({
     password: '',
@@ -21,7 +23,8 @@ const SignIn = ({ onSignIn }) => {
     .then(res => {
       if(res.ok){
         res.json()
-        .then(user => onSignIn(user));
+        .then(user => onSignIn(user))
+        .then(navigate('/'));
       }else{
         res.json().then(e => setErrors(e))
       }

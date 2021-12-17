@@ -1,13 +1,14 @@
 import React from "react";
 import { Container, Row } from 'react-bootstrap';
 
-const Home = () => {
+const Home = ( {currentUser}) => {
 
+  console.log(currentUser)
   return (
     <Container>
       <Row>
         <h1>
-          Welcome to the Lovely Nutrition Weight Loss Tracker. 
+          {currentUser.name} Welcome to the Lovely Nutrition Weight Loss Tracker 
         </h1>
       </Row>
     </Container>

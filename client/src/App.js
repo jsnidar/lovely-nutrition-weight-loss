@@ -2,22 +2,27 @@ import './App.css';
 import NavBar from './NavBar';
 import Home from './Home';
 import SignUp from './SignUp';
-import { useState } from 'react';
+import SignIn from './SignIn';
+import { useState, useEffect } from 'react';
 import { Route, Routes } from "react-router-dom"
 
 function App() {
 
-  const [currentUser, setCurrentUser] = useState({})
+  const [currentUser, setCurrentUser] = useState(null)
 
   useEffect(() => {
     // auto-login
     fetch("/me").then((r) => {
       if (r.ok) {
-        r.json().then((user) => setUser(user));
+        r.json().then((user) => setCurrentUser(user));
       }
     });
   }, []);
+
+  if (!currentUser) return <SignIn signIn={setCurrentUser} />;
+
   
+
   return (
     <div>
       <NavBar />
@@ -25,7 +30,7 @@ function App() {
         <Route 
           path='/' 
           element={
-            <Home />
+            <Home currentUser={currentUser} />
           } 
         />
         <Route 
