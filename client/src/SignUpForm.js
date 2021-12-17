@@ -3,7 +3,7 @@ import { Button, Form, Container, Row, Col } from 'react-bootstrap';
 import ErrorAlert from './ErrorAlert';
 import { useNavigate } from 'react-router-dom';
 
-const SignUp = ({ setCurrentUser }) => {
+const SignUpForm = ({ setCurrentUser }) => {
 
   const [errors, setErrors] = useState(null)
   const [formData, setFormData ] = useState({
@@ -166,4 +166,4 @@ const SignUp = ({ setCurrentUser }) => {
   );
 }
 
-export default SignUp;
+export default SignUpForm;

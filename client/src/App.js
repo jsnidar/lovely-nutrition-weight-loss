@@ -1,8 +1,7 @@
 import './App.css';
 import NavBar from './NavBar';
 import Home from './Home';
-import SignUp from './SignUp';
-import SignIn from './SignIn';
+import LogIn from './LogIn';
 import { useState, useEffect } from 'react';
 import { Route, Routes } from "react-router-dom"
 
@@ -19,13 +18,13 @@ function App() {
     });
   }, []);
 
-  if (!currentUser) return <SignIn signIn={setCurrentUser} />;
+  if (!currentUser) return <LogIn setCurrentUser={setCurrentUser} />;
 
-  
+
 
   return (
     <div>
-      <NavBar />
+      <NavBar setCurrentUser={setCurrentUser} />
       <Routes>
         <Route 
           path='/' 
@@ -34,15 +33,9 @@ function App() {
           } 
         />
         <Route 
-          path='/sign-up' 
-          element={
-            <SignUp setCurrentUser={setCurrentUser} />
-          } 
-        />
-        <Route 
           path='/log-in' 
           element={
-            <SignIn onSignIn={setCurrentUser} />
+            <LogIn setCurrentUser={setCurrentUser} />
           } 
         />
       </Routes>

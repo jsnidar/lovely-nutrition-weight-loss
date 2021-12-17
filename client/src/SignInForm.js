@@ -3,7 +3,7 @@ import { Form, Container, Row, Col, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import ErrorAlert from './ErrorAlert';
 
-const SignIn = ({ onSignIn }) => {
+const SignInForm = ({ setCurrentUser }) => {
 
   let navigate = useNavigate()
   const [errors, setErrors] = useState(null)
@@ -23,7 +23,7 @@ const SignIn = ({ onSignIn }) => {
     .then(res => {
       if(res.ok){
         res.json()
-        .then(user => onSignIn(user))
+        .then(user => setCurrentUser(user))
         .then(navigate('/'));
       }else{
         res.json().then(e => setErrors(e))
@@ -75,4 +75,4 @@ const SignIn = ({ onSignIn }) => {
   );
 }
 
-export default SignIn;
+export default SignInForm;

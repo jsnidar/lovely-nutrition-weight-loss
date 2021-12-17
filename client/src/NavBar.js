@@ -1,10 +1,17 @@
 import React from 'react';
-import { Container, Navbar, Nav } from 'react-bootstrap';
+import { Container, Navbar, Nav, Button } from 'react-bootstrap';
 
-const NavBar = () => {
+const NavBar = ({ setCurrentUser }) => {
+
+  function handleLogoutClick() {
+    fetch("/logout", { method: "DELETE" }).then((r) => {
+      if (r.ok) {
+        setCurrentUser(null);
+      }
+    });
+  }
 
   return (
-    <Container>
       <Navbar className='navigation' bg='light' expand="lg" sticky="top">
         <Container>
           <Navbar.Brand href="/">
@@ -19,13 +26,13 @@ const NavBar = () => {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav>
               <Nav.Link href="/">Home</Nav.Link>
-              <Nav.Link href="/sign-up">Sign Up</Nav.Link>
-              <Nav.Link href="/log-in">Log In</Nav.Link>
+              <Button variant="outline-warning" onClick={handleLogoutClick}>
+                Logout
+              </Button>
             </Nav>
           </Navbar.Collapse>
         </Container>
       </Navbar>
-    </Container>
   )
 }
 
