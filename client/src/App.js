@@ -2,6 +2,7 @@ import './App.css';
 import NavBar from './NavBar';
 import Home from './Home';
 import LogIn from './LogIn';
+import CheckInForm from './CheckInForm';
 import { useState, useEffect } from 'react';
 import { Route, Routes } from "react-router-dom"
 
@@ -32,12 +33,11 @@ function App() {
             <Home currentUser={currentUser} />
           } 
         />
-        <Route 
-          path='/log-in' 
-          element={
-            <LogIn setCurrentUser={setCurrentUser} />
-          } 
-        />
+          <Route
+            path='/check-ins/new'
+            element={
+              <CheckInForm />
+            } />
       </Routes>
     </div>
   );

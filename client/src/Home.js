@@ -1,5 +1,6 @@
 import React from "react";
 import { Container, Row, Image } from 'react-bootstrap';
+import { Link } from "react-router-dom";
 
 const Home = ( {currentUser}) => {
 
@@ -20,6 +21,9 @@ const Home = ( {currentUser}) => {
       </Row>
       <Row>
         Check Ins
+      </Row>
+      <Row>
+        <Link to="/check-ins/new">Create a New Check In</Link>
       </Row>
     </Container>
   );
