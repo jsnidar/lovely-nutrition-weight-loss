@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   
+  # resources :check_ins, only: [:create, :show, :update, :destroy]
+
+  post "/check-ins", to: "check_ins#create"
   post "/signup", to: "users#create"
   get "/me", to: "users#show"
   patch "/users/:id", to: "users#update"
@@ -7,7 +10,6 @@ Rails.application.routes.draw do
   post "/login", to: "sessions#create"
   delete "logout", to: "sessions#destroy"
 
-  resources :check_ins, only: [:create, :show, :update, :destroy]
   # Routing logic: fallback requests for React Router.
   # Leave this here to help deploy your app later!
   get "*path", to: "fallback#index", constraints: ->(req) { !req.xhr? && req.format.html? }

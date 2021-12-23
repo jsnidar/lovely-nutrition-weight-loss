@@ -6,7 +6,6 @@ const ErrorAlert = ({ errors }) => {
 
   return(
     <Alert variant="danger">
-      
       <ul>
         {renderErrors}
       </ul>
