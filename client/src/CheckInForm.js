@@ -18,8 +18,8 @@ const CheckInForm = () => {
   const [formData, setFormData] = useState({
     date: "",
     weight: "",
-    left_arm: "",
-    left_thigh: "",
+    left_arm_measurement: "",
+    left_thigh_measurement: "",
     waist: "",
     chest: "",
     hips: "",
@@ -85,8 +85,8 @@ const CheckInForm = () => {
             <Form.Group className="mb-3" controlId="left_arm_measurement">
               <Form.Label>Left Arm (in) </Form.Label>
               <Form.Select 
-                value={formData.left_arm}
-                onChange={e => setFormData({...formData, left_arm: parseFloat(e.target.value)})}
+                value={formData.left_arm_measurement}
+                onChange={e => setFormData({...formData, left_arm_measurement: parseFloat(e.target.value)})}
                 aria-label="Select a measurement"
               >
                 <option>Select a measurement</option>
@@ -98,8 +98,8 @@ const CheckInForm = () => {
             <Form.Group className="mb-3" controlId="left_thigh_measurement">
               <Form.Label>Left Thigh (in)</Form.Label>
               <Form.Select 
-                value={formData.left_thigh}
-                onChange={e => setFormData({...formData, left_thigh: parseFloat(e.target.value)})}
+                value={formData.left_thigh_measurement}
+                onChange={e => setFormData({...formData, left_thigh_measurement: parseFloat(e.target.value)})}
                 aria-label="Select a measurement"
               >
                 <option>Select a measurement</option>
