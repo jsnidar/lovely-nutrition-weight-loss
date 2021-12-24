@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
   
-  # resources :check_ins, only: [:create, :show, :update, :destroy]
+  resources :check_ins, only: [:create, :show, :update, :destroy]
 
-  post "/check-ins", to: "check_ins#create"
+  # post "/check-ins", to: "check_ins#create"
   post "/signup", to: "users#create"
   get "/me", to: "users#show"
   patch "/users/:id", to: "users#update"

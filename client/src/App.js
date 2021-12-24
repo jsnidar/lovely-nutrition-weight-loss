@@ -21,7 +21,11 @@ function App() {
 
   if (!currentUser) return <LogIn setCurrentUser={setCurrentUser} />;
 
-
+  const updateCheckIns = (checkIn) => {
+    const updatedUserInfo = {...currentUser}
+    updatedUserInfo.check_ins.push(checkIn)
+    setCurrentUser(updatedUserInfo)
+  }
 
   return (
     <div>
@@ -36,7 +40,7 @@ function App() {
           <Route
             path='/check-ins/new'
             element={
-              <CheckInForm />
+              <CheckInForm updateCheckIns={updateCheckIns} />
             } />
       </Routes>
     </div>

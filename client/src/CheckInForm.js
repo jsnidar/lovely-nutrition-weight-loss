@@ -4,7 +4,7 @@ import { useState } from 'react';
 import ErrorAlert from './ErrorAlert';
 import { useNavigate } from 'react-router-dom';
 
-const CheckInForm = () => {
+const CheckInForm = ({updateCheckIns}) => {
 
   const measurementDropDownValues = []
   let i = 0
@@ -34,7 +34,7 @@ const CheckInForm = () => {
   const handleCheckInSubmit = (e) => {
     e.preventDefault()
     setErrors(null)
-    fetch('/check-ins', {
+    fetch('/check_ins', {
       method: "POST",
       headers: {'Content-Type':'application/json'},
       body:JSON.stringify(formData)
@@ -42,7 +42,7 @@ const CheckInForm = () => {
     .then(res => {
       if(res.ok){
         res.json()
-        .then(checkIn => console.log(checkIn))
+        .then(checkIn => updateCheckIns(checkIn))
         .then(navigate('/'));
       }else{
         res.json().then(e => setErrors(e))
