@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Container, Row, Image, Button } from 'react-bootstrap';
 import { Link } from "react-router-dom";
 import CheckInCard from "./CheckInCard";
+import GoalChart from "./GoalChart";
 
 const Home = ( {currentUser}) => {
 
@@ -13,6 +14,7 @@ const Home = ( {currentUser}) => {
     return new Date(b.date) - new Date(a.date);
   }).map(checkIn => <CheckInCard key={checkIn.id} checkInInfo={checkIn} />)
 
+
   return (
     <Container>
       <Row>
@@ -23,6 +25,9 @@ const Home = ( {currentUser}) => {
       </Row>
       <Row>
         Current Goal
+      </Row>
+      <Row>
+        <GoalChart currentUser={currentUser}/>
       </Row>
       <Row>
         Create a Goal

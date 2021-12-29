@@ -21,7 +21,7 @@ const CheckInCard = ({ checkInInfo }) => {
             {checkInInfo.waist ? <Card.Text>Waist: {checkInInfo.waist} in.</Card.Text> : null}
             {checkInInfo.hips ? <Card.Text>Hips: {checkInInfo.hips} in.</Card.Text> : null}
             {checkInInfo.chest ? <Card.Text>Chest: {checkInInfo.chest} in.</Card.Text> : null}
-            <Card.Text>Notes: {checkInInfo.notes}.</Card.Text>
+            <Card.Text>Notes: {checkInInfo.notes}</Card.Text>
           </Col>
         </Row>
         {/* <Card.Link href="#">Card Link</Card.Link> */}
