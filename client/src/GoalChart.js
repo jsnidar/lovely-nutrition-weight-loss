@@ -47,17 +47,17 @@ const GoalChart = ({currentUser}) => {
   const data = {
     datasets: [
       {
-        label: 'Goal',
-        data: [{x: currentGoal.goal_start_date, y: goalCheckIns[0].weight}, {x: currentGoal.goal_end_date, y:currentGoal.goal_weight}],
-        borderColor: 'rgb(255, 99, 132)',
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
-      },
-      {
         label: 'Check-Ins',
         data: goalCheckIns,
         borderColor: 'rgb(53, 162, 235)',
         backgroundColor: 'rgba(53, 162, 235, 0.5)',
       },
+      {
+        label: 'Goal',
+        data: [{x: currentGoal.goal_start_date, y: goalCheckIns[0].y}, {x: currentGoal.goal_end_date, y:currentGoal.goal_weight}],
+        borderColor: '#FFCE0E',
+        backgroundColor: '#FFCE0E',
+      }
     ],
   };
 
@@ -65,6 +65,7 @@ const GoalChart = ({currentUser}) => {
     <Line
       options={options}
       data={data}
+      style={{vh:50}}
     />
   )
 }
