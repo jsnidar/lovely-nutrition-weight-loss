@@ -6,6 +6,12 @@ class CheckInsController < ApplicationController
     render json: check_in, status: :created
   end
 
+  def destroy 
+    check_in = CheckIn.find(params[:id])
+    check_in.destroy
+    render json: {}
+  end
+
   private
 
   def check_in_params

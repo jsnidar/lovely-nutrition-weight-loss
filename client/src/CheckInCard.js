@@ -1,10 +1,27 @@
 
-import { Card, Row, Col } from "react-bootstrap"
+import { useState } from "react";
+import { Card, Row, Col, Button } from "react-bootstrap"
 
-const CheckInCard = ({ checkInInfo }) => {
+const CheckInCard = ({ checkInInfo, deleteCheckIn }) => {
 
+  const [errors, setErrors] = useState(null)
   const formattedDate = new Date(checkInInfo.date).toString().slice(0, 15);
-  
+
+  const handleDeleteCheckIn = () => {
+    debugger
+    fetch(`/check_ins/${checkInInfo.id}`, {
+      method: "DELETE"
+    })
+    .then(res => {
+      if(res.ok){
+        res.json()
+        .then(() => deleteCheckIn(checkInInfo));
+      }else{
+        res.json().then(e => setErrors(e))
+      }
+    })
+  }
+
   return (
     <Card>
       <Card.Body>
@@ -24,7 +41,9 @@ const CheckInCard = ({ checkInInfo }) => {
             <Card.Text>Notes: {checkInInfo.notes}</Card.Text>
           </Col>
         </Row>
-        {/* <Card.Link href="#">Card Link</Card.Link> */}
+        <Button onClick={() => handleDeleteCheckIn()} >Delete</Button>
+        <Button>Edit</Button>
+        {/* <Card.Link href="0">Card Link</Card.Link> */}
       </Card.Body>
     </Card>
   )

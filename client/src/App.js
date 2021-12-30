@@ -27,6 +27,12 @@ function App() {
     setCurrentUser(updatedUserInfo)
   }
 
+  const deleteCheckIn = (deletedCheckIn) => {
+    const updatedUserInfo = {...currentUser}
+    updatedUserInfo.check_ins = currentUser.check_ins.filter(checkIn => checkIn.id !== deletedCheckIn.id)
+    setCurrentUser(updatedUserInfo)
+  }
+
   return (
     <div>
       <NavBar setCurrentUser={setCurrentUser} />
@@ -34,7 +40,7 @@ function App() {
         <Route 
           path='/' 
           element={
-            <Home currentUser={currentUser} />
+            <Home deleteCheckIn={deleteCheckIn} currentUser={currentUser} />
           } 
         />
           <Route

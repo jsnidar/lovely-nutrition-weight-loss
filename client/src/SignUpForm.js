@@ -80,9 +80,6 @@ const SignUpForm = ({ setCurrentUser }) => {
                 />
               </Form.Group>
             </Col>
-          </Row>
-          <Form.Label>Height</Form.Label>
-          <Row>
             <Col>
               <Form.Group className="mb-3" controlId="username">
                 <Form.Label>Username</Form.Label>
@@ -94,6 +91,9 @@ const SignUpForm = ({ setCurrentUser }) => {
                 />
               </Form.Group>
             </Col>
+          </Row>
+            <Form.Label>Height</Form.Label>
+          <Row>
             <Col>
               <Form.Group className="mb-3" controlId="heightFeet">
                 <Form.Label>Feet</Form.Label>
@@ -117,42 +117,54 @@ const SignUpForm = ({ setCurrentUser }) => {
               </Form.Group>
             </Col>
           </Row>
-          <Form.Group className="mb-3" controlId="email">
-            <Form.Label>Email address</Form.Label>
-            <Form.Control 
-              type="email" 
-              placeholder="name@example.com" 
-              value={formData.email}
-              onChange={e => setFormData({...formData, email: e.target.value})}
-            />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="emailConfirmation">
-            <Form.Label>Confirm email address</Form.Label>
-            <Form.Control 
-              type="email" 
-              placeholder="name@example.com" 
-              value={formData.email_confirmation}
-              onChange={e => setFormData({...formData, email_confirmation: e.target.value})}
-            />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="password">
-            <Form.Label>Create Password</Form.Label>
-            <Form.Control 
-              type="password" 
-              placeholder="Create a password" 
-              value={formData.password}
-              onChange={e => setFormData({...formData, password: e.target.value})}
-            />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="passwordConfirmation">
-            <Form.Label>Confirm Password</Form.Label>
-            <Form.Control 
-              type="password" 
-              placeholder="Confirm your password" 
-              value={formData.password_confirmation}
-              onChange={e => setFormData({...formData, password_confirmation: e.target.value})}
-            />
-          </Form.Group>
+          <Row>
+            <Col>
+                <Form.Group className="mb-3" controlId="email">
+                  <Form.Label>Enter Email Address</Form.Label>
+                  <Form.Control 
+                    type="email" 
+                    placeholder="name@example.com" 
+                    value={formData.email}
+                    onChange={e => setFormData({...formData, email: e.target.value})}
+                  />
+                </Form.Group>
+            </Col>
+            <Col>
+              <Form.Group className="mb-3" controlId="emailConfirmation">
+                <Form.Label>Confirm Email Address</Form.Label>
+                <Form.Control 
+                  type="email" 
+                  placeholder="name@example.com" 
+                  value={formData.email_confirmation}
+                  onChange={e => setFormData({...formData, email_confirmation: e.target.value})}
+                />
+              </Form.Group>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Form.Group className="mb-3" controlId="password">
+                <Form.Label>Create Password</Form.Label>
+                <Form.Control 
+                  type="password" 
+                  placeholder="Create a password" 
+                  value={formData.password}
+                  onChange={e => setFormData({...formData, password: e.target.value})}
+                />
+              </Form.Group>
+            </Col>
+            <Col>
+              <Form.Group className="mb-3" controlId="passwordConfirmation">
+                <Form.Label>Confirm Password</Form.Label>
+                <Form.Control 
+                  type="password" 
+                  placeholder="Confirm your password" 
+                  value={formData.password_confirmation}
+                  onChange={e => setFormData({...formData, password_confirmation: e.target.value})}
+                />
+              </Form.Group>
+            </Col>
+          </Row>
           <Button 
             variant="warning" 
             type="submit"

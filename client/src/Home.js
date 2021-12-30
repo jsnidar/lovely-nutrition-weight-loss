@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import CheckInCard from "./CheckInCard";
 import GoalChart from "./GoalChart";
 
-const Home = ( {currentUser}) => {
+const Home = ( {currentUser, deleteCheckIn}) => {
 
   const [showCheckIns, setShowCheckins] = useState(false)
 
@@ -12,7 +12,7 @@ const Home = ( {currentUser}) => {
 
   const renderCheckIns = currentUser.check_ins.sort(function(a,b){
     return new Date(b.date) - new Date(a.date);
-  }).map(checkIn => <CheckInCard key={checkIn.id} checkInInfo={checkIn} />)
+  }).map(checkIn => <CheckInCard key={checkIn.id} checkInInfo={checkIn} deleteCheckIn={deleteCheckIn} />)
 
 
   return (
@@ -44,8 +44,12 @@ const Home = ( {currentUser}) => {
         {showCheckIns ? renderCheckIns : null }
       </Row>
       <Row>
+        <br></br>
         <Link to="/check-ins/new">Create a New Check In</Link>
+        <br></br>
       </Row>
+      <br></br>
+      <br></br>
     </Container>
   );
 }
