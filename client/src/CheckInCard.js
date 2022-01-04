@@ -1,14 +1,16 @@
 
 import { useState } from "react";
+import { useNavigate } from "react-router-dom"
 import { Card, Row, Col, Button } from "react-bootstrap"
 
 const CheckInCard = ({ checkInInfo, deleteCheckIn }) => {
 
   const [errors, setErrors] = useState(null)
   const formattedDate = new Date(checkInInfo.date).toString().slice(0, 15);
+  let navigate = useNavigate();
+
 
   const handleDeleteCheckIn = () => {
-    debugger
     fetch(`/check_ins/${checkInInfo.id}`, {
       method: "DELETE"
     })
@@ -41,8 +43,8 @@ const CheckInCard = ({ checkInInfo, deleteCheckIn }) => {
             <Card.Text>Notes: {checkInInfo.notes}</Card.Text>
           </Col>
         </Row>
-        <Button onClick={() => handleDeleteCheckIn()} >Delete</Button>
-        <Button>Edit</Button>
+        <Button variant='warning' onClick={() => handleDeleteCheckIn()}>Delete</Button>
+        <Button variant='warning' onClick={() => navigate(`/check-ins/${checkInInfo.id}/edit`)}>Edit</Button>
         {/* <Card.Link href="0">Card Link</Card.Link> */}
       </Card.Body>
     </Card>

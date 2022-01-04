@@ -1,10 +1,52 @@
 
 import { Form, Container, Row, Col, Button } from 'react-bootstrap';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ErrorAlert from './ErrorAlert';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
-const CheckInForm = ({updateCheckIns}) => {
+const CheckInForm = ({updateCheckIns, checkInToEdit }) => {
+
+  let { checkInId } = useParams()
+  let navigate = useNavigate()
+
+  const [errors, setErrors] = useState(null)
+  const [formData, setFormData] = useState({
+    date: "",
+    weight: "",
+    left_arm_measurement: "",
+    left_thigh_measurement: "",
+    waist: "",
+    chest: "",
+    hips: "",
+    notes: "",
+    id: null
+  })
+
+  useEffect(() => {
+    if(checkInId) {
+      fetch(`/check_ins/${checkInId}`)
+      .then(r => r.json())
+      .then(checkIn => {
+        const formattedCheckIn = {
+          date: "",
+          weight: "",
+          left_arm_measurement: "",
+          left_thigh_measurement: "",
+          waist: "",
+          chest: "",
+          hips: "",
+          notes: "",
+          id: null
+        }
+        for(const key in checkIn) {
+          if(checkIn[key] !== null) {
+            formattedCheckIn[key] = checkIn[key]
+          }
+        }
+        setFormData(formattedCheckIn)
+      })
+    }
+  }, [checkInId])
 
   const measurementDropDownValues = []
   let i = 0
@@ -15,25 +57,24 @@ const CheckInForm = ({updateCheckIns}) => {
 
   const renderMeasurements = measurementDropDownValues.map(value => <option key={value} value={value}>{value}</option>)
   
-  const [formData, setFormData] = useState({
-    date: "",
-    weight: "",
-    left_arm_measurement: "",
-    left_thigh_measurement: "",
-    waist: "",
-    chest: "",
-    hips: "",
-    notes: ""
-  })
+  const editCheckIn = () => {
+    fetch(`/check_ins/${checkInId}`, {
+      method: "PATCH",
+      headers: {'Content-Type':'application/json'},
+      body:JSON.stringify(formData)
+    })
+    .then(res => {
+      if(res.ok){
+        res.json()
+        .then(checkIn => updateCheckIns(checkIn, checkInId))
+        .then(navigate('/'));
+      }else{
+        res.json().then(e => setErrors(e))
+      }
+    })
+  }
 
-  console.log(formData)
-
-  const [errors, setErrors] = useState(null)
-  let navigate = useNavigate()
-
-  const handleCheckInSubmit = (e) => {
-    e.preventDefault()
-    setErrors(null)
+  const createCheckIn = () => {
     fetch('/check_ins', {
       method: "POST",
       headers: {'Content-Type':'application/json'},
@@ -50,12 +91,18 @@ const CheckInForm = ({updateCheckIns}) => {
     })
   }
 
+  const handleCheckInSubmit = (e) => {
+    e.preventDefault()
+    setErrors(null)
+    checkInId ? editCheckIn() : createCheckIn()
+  }
+
   return (
     <Container>
       <br></br>
       <Form>
         <Row>
-          <h1>Create a New Check In</h1>
+          { checkInId ? <h1>Edit Check In</h1> : <h1>Create a New Check In</h1> }
           { errors ? <ErrorAlert errors={errors.errors} /> : null }
         </Row>
         <Row>

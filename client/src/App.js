@@ -21,12 +21,17 @@ function App() {
 
   if (!currentUser) return <LogIn setCurrentUser={setCurrentUser} />;
 
-  const updateCheckIns = (checkIn) => {
+  const updateCheckIns = (checkIn, checkInId) => {
     const updatedUserInfo = {...currentUser}
-    updatedUserInfo.check_ins.push(checkIn)
+    checkInId ? updatedUserInfo.check_ins.map(check_in => {
+      if (check_in.id === checkInId) {
+          return checkIn 
+      }else{
+          return check_in
+      }}) : updatedUserInfo.check_ins.push(checkIn)
     setCurrentUser(updatedUserInfo)
-  }
-
+    }
+    
   const deleteCheckIn = (deletedCheckIn) => {
     const updatedUserInfo = {...currentUser}
     updatedUserInfo.check_ins = currentUser.check_ins.filter(checkIn => checkIn.id !== deletedCheckIn.id)
@@ -40,14 +45,24 @@ function App() {
         <Route 
           path='/' 
           element={
-            <Home deleteCheckIn={deleteCheckIn} currentUser={currentUser} />
+            <Home 
+              deleteCheckIn={deleteCheckIn} 
+              currentUser={currentUser} 
+            />
           } 
         />
           <Route
             path='/check-ins/new'
             element={
               <CheckInForm updateCheckIns={updateCheckIns} />
-            } />
+            } 
+          />
+          <Route
+            path='/check-ins/:checkInId/edit'
+            element={
+              <CheckInForm updateCheckIns={updateCheckIns} />
+            } 
+          />
       </Routes>
     </div>
   );

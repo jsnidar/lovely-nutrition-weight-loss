@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import CheckInCard from "./CheckInCard";
 import GoalChart from "./GoalChart";
 
-const Home = ( {currentUser, deleteCheckIn}) => {
+const Home = ({currentUser, deleteCheckIn}) => {
 
   const [showCheckIns, setShowCheckins] = useState(false)
 

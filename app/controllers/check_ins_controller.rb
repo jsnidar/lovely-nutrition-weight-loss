@@ -12,6 +12,17 @@ class CheckInsController < ApplicationController
     render json: {}
   end
 
+  def show
+    check_in = CheckIn.find(params[:id])
+    render json: check_in
+  end
+
+  def update
+    check_in = CheckIn.find(params[:id])
+    check_in.update!(check_in_params)
+    render json: check_in
+  end
+
   private
 
   def check_in_params

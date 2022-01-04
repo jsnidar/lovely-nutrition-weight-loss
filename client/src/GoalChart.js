@@ -24,7 +24,7 @@ const GoalChart = ({currentUser}) => {
   const currentGoal = currentUser.goals[currentUser.goals.length - 1]
   let goalCheckIns = []
   currentUser.check_ins.forEach(checkIn => {
-    if(new Date(checkIn.date) >= new Date(currentGoal.goal_start_date) && new Date(checkIn.date) <= new Date(currentGoal.goal_end_date)) {
+    if((new Date(checkIn.date).getTime() >= new Date(currentGoal.goal_start_date).getTime() && new Date(checkIn.date).getTime() <= new Date(currentGoal.goal_end_date).getTime()))  {
       goalCheckIns.push({x: checkIn.date, y: checkIn.weight})
     }
   })
