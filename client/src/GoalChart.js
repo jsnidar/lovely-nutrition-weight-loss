@@ -21,10 +21,13 @@ ChartJS.register(
 );
 
 const GoalChart = ({currentUser}) => {
-  const currentGoal = currentUser.goals[currentUser.goals.length - 1]
+  const currentGoal = currentUser.goals.sort(function(a,b){
+    return new Date(a.goal_end_date) - new Date(b.goal_end_date);
+  })[currentUser.goals.length - 1]
   let goalCheckIns = []
   currentUser.check_ins.forEach(checkIn => {
-    if((new Date(checkIn.date).getTime() >= new Date(currentGoal.goal_start_date).getTime() && new Date(checkIn.date).getTime() <= new Date(currentGoal.goal_end_date).getTime()))  {
+    if(
+      (new Date(checkIn.date).getTime() >= new Date(currentGoal.goal_start_date).getTime() && new Date(checkIn.date).getTime() <= new Date(currentGoal.goal_end_date).getTime())){
       goalCheckIns.push({x: checkIn.date, y: checkIn.weight})
     }
   })

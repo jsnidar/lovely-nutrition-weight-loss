@@ -30,7 +30,7 @@ const Home = ({currentUser, deleteCheckIn}) => {
         <GoalChart currentUser={currentUser}/>
       </Row>
       <Row>
-        Create a Goal
+        <Link to="/goals/new">Create a Goal</Link>
       </Row>
       <Row>
         Check Ins
