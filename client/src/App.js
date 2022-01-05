@@ -3,6 +3,7 @@ import NavBar from './NavBar';
 import Home from './Home';
 import LogIn from './LogIn';
 import CheckInForm from './CheckInForm';
+import GoalForm from './GoalForm';
 import { useState, useEffect } from 'react';
 import { Route, Routes } from "react-router-dom"
 
@@ -21,6 +22,23 @@ function App() {
 
   if (!currentUser) return <LogIn setCurrentUser={setCurrentUser} />;
 
+  const updateGoals = (goal, goalId) => {
+    const updatedUserInfo = {...currentUser}
+    goalId ? updatedUserInfo.goals.map(priorGoal => {
+      if (priorGoal.id === goalId) {
+          return goal 
+      }else{
+          return priorGoal
+      }}) : updatedUserInfo.goals.push(goal)
+    setCurrentUser(updatedUserInfo)
+  }
+
+  const deleteGoal = (deletedGoal) => {
+    const updatedUserInfo = {...currentUser}
+    updatedUserInfo.goals = currentUser.goals.filter(goal => goal.id !== deletedGoal.id)
+    setCurrentUser(updatedUserInfo)
+  }
+
   const updateCheckIns = (checkIn, checkInId) => {
     const updatedUserInfo = {...currentUser}
     checkInId ? updatedUserInfo.check_ins.map(check_in => {
@@ -30,7 +48,7 @@ function App() {
           return check_in
       }}) : updatedUserInfo.check_ins.push(checkIn)
     setCurrentUser(updatedUserInfo)
-    }
+  }
     
   const deleteCheckIn = (deletedCheckIn) => {
     const updatedUserInfo = {...currentUser}
@@ -40,13 +58,14 @@ function App() {
 
   return (
     <div>
-      <NavBar setCurrentUser={setCurrentUser} />
+      <NavBar currentUser={currentUser} setCurrentUser={setCurrentUser} />
       <Routes>
         <Route 
           path='/' 
           element={
             <Home 
-              deleteCheckIn={deleteCheckIn} 
+              deleteCheckIn={deleteCheckIn}
+              deleteGoal={deleteGoal}
               currentUser={currentUser} 
             />
           } 
@@ -61,6 +80,18 @@ function App() {
             path='/check-ins/:checkInId/edit'
             element={
               <CheckInForm updateCheckIns={updateCheckIns} />
+            } 
+          />
+          <Route
+            path='/goals/:goalId/edit'
+            element={
+              <GoalForm currentUser={currentUser} updateGoals={updateGoals} />
+            }
+          />
+          <Route
+            path='/goals/new'
+            element={
+              <GoalForm currentUser={currentUser} updateGoals={updateGoals} />
             } 
           />
       </Routes>

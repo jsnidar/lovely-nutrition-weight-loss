@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import ErrorAlert from './ErrorAlert';
 import { useNavigate, useParams } from 'react-router-dom';
 
-const CheckInForm = ({updateCheckIns, checkInToEdit }) => {
+const CheckInForm = ({updateCheckIns}) => {
 
   let { checkInId } = useParams()
   let navigate = useNavigate()
@@ -197,7 +197,7 @@ const CheckInForm = ({updateCheckIns, checkInToEdit }) => {
           </Col>
         </Row>
         <Row>
-          <Form.Group className="mb-3" controlId="date">
+          <Form.Group className="mb-3" controlId="notes">
             <Form.Label>Notes</Form.Label>
             <Form.Control 
               type="text" 

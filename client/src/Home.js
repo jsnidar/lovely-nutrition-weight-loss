@@ -19,12 +19,13 @@ const Home = ({currentUser, deleteCheckIn}) => {
     <Container>
       <Row>
         <Image src="JacquelynKPhotography_LovelyNutritionLogo_BLACK.png" />
-        <h1>
-          {currentUser.name} Welcome to the Lovely Nutrition Weight Loss Tracker 
-        </h1>
+        <h1>Weight Loss Tracker</h1>
+        <br></br>
       </Row>
       <Row>
-        Current Goal
+        <h3>Goals</h3>
+        <br></br>
+        <h5>Current Goal</h5>
       </Row>
       <Row>
         <GoalChart currentUser={currentUser}/>
@@ -33,7 +34,7 @@ const Home = ({currentUser, deleteCheckIn}) => {
         <Link to="/goals/new">Create a Goal</Link>
       </Row>
       <Row>
-        Check Ins
+        <h3>Check Ins</h3>
       </Row>
       <Row>
         <Button variant="warning" onClick={() => setShowCheckins(!showCheckIns)}>

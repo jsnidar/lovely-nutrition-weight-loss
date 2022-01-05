@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Navbar, Nav, Button } from 'react-bootstrap';
 
-const NavBar = ({ setCurrentUser }) => {
+const NavBar = ({ setCurrentUser, currentUser }) => {
 
   function handleLogoutClick() {
     fetch("/logout", { method: "DELETE" }).then((r) => {
@@ -15,12 +15,7 @@ const NavBar = ({ setCurrentUser }) => {
       <Navbar className='navigation' bg='light' expand="lg" sticky="top">
         <Container>
           <Navbar.Brand href="/">
-            <img
-              src="JacquelynKPhotography_LovelyNutritionLogo_BLACK.png"
-              height="80rem"
-              className="d-inline-block align-top"
-              alt="Lovely Nutrition Logo"
-            />
+            {currentUser.name}
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
