@@ -1,8 +1,7 @@
 class CheckInsController < ApplicationController
 
   def create
-    user = User.find(session[:user_id])
-    check_in = user.check_ins.create!(check_in_params)
+    check_in = @current_user.check_ins.create!(check_in_params)
     render json: check_in, status: :created
   end
 

@@ -20,7 +20,7 @@ const GoalForm = ({currentUser, updateGoals }) => {
   })
 
   console.log(formData)
-  
+
   useEffect(() => {
     if(goalId) {
       fetch(`/goals/${goalId}`)
@@ -87,7 +87,7 @@ const GoalForm = ({currentUser, updateGoals }) => {
             <Form.Control 
               type="text" 
               placeholder="Enter a name for your goal here" 
-              value={formData.notes}
+              value={formData.goal_name}
               onChange={e => setFormData({...formData, goal_name: e.target.value})}
             />
           </Form.Group>
@@ -129,17 +129,6 @@ const GoalForm = ({currentUser, updateGoals }) => {
               />
             </Form.Group>
           </Col>
-        </Row>
-        <Row>
-          <Form.Group className="mb-3" controlId="goalName">
-            <Form.Label>Goal Name</Form.Label>
-            <Form.Control 
-              type="text" 
-              placeholder="Enter a name for your goal here" 
-              value={formData.notes}
-              onChange={e => setFormData({...formData, goal_name: e.target.value})}
-            />
-          </Form.Group>
         </Row>
         <Button 
           variant="warning" 

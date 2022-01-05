@@ -3,16 +3,23 @@ import { Container, Row, Image, Button } from 'react-bootstrap';
 import { Link } from "react-router-dom";
 import CheckInCard from "./CheckInCard";
 import GoalChart from "./GoalChart";
+import GoalCard from "./GoalCard";
 
-const Home = ({currentUser, deleteCheckIn}) => {
+const Home = ({currentUser, deleteCheckIn, deleteGoal}) => {
 
   const [showCheckIns, setShowCheckins] = useState(false)
+  const [showGoals, setShowGoals] = useState(false)
+
 
   console.log(currentUser)
 
   const renderCheckIns = currentUser.check_ins.sort(function(a,b){
     return new Date(b.date) - new Date(a.date);
   }).map(checkIn => <CheckInCard key={checkIn.id} checkInInfo={checkIn} deleteCheckIn={deleteCheckIn} />)
+
+  const renderGoals = currentUser.goals.sort(function(a,b){
+    return new Date(b.date) - new Date(a.date);
+  }).map(goal => <GoalCard key={goal.id} goalInfo={goal} deleteGoal={deleteGoal} />)
 
 
   return (
@@ -28,10 +35,18 @@ const Home = ({currentUser, deleteCheckIn}) => {
         <h5>Current Goal</h5>
       </Row>
       <Row>
-        <GoalChart currentUser={currentUser}/>
+        <GoalChart currentUser={currentUser} deleteGoal={deleteGoal}/>
       </Row>
       <Row>
         <Link to="/goals/new">Create a Goal</Link>
+      </Row>
+      <Row>
+        <Button variant="warning" onClick={() => setShowGoals(!showGoals)}>
+          {showGoals ? "Hide Goals" : "Show Goals" }
+        </Button>
+      </Row>
+      <Row>
+        {showGoals ? renderGoals : null }
       </Row>
       <Row>
         <h3>Check Ins</h3>

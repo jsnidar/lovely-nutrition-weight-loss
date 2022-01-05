@@ -1,3 +1,6 @@
+import { useNavigate } from 'react-router-dom';
+import { Button } from 'react-bootstrap';
+import { useState } from 'react';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -20,10 +23,29 @@ ChartJS.register(
   Legend
 );
 
-const GoalChart = ({currentUser}) => {
+const GoalChart = ({currentUser, deleteGoal}) => {
+  let navigate = useNavigate()
+  const [errors, setErrors] = useState(null)
+
+
   const currentGoal = currentUser.goals.sort(function(a,b){
     return new Date(a.goal_end_date) - new Date(b.goal_end_date);
-  })[currentUser.goals.length - 1]
+  })[currentUser.goals.length -1]
+
+  const handleDeleteGoal = () => {
+    fetch(`/goals/${currentGoal.id}`, {
+      method: "DELETE"
+    })
+    .then(res => {
+      if(res.ok){
+        res.json()
+        .then(() => deleteGoal(currentGoal));
+      }else{
+        res.json().then(e => setErrors(e))
+      }
+    })
+  }
+
   let goalCheckIns = []
   currentUser.check_ins.forEach(checkIn => {
     if(
@@ -35,7 +57,12 @@ const GoalChart = ({currentUser}) => {
   goalCheckIns = goalCheckIns.sort(function(a,b){
     return new Date(a.x) - new Date(b.x);
   })
-  console.log(goalCheckIns)
+
+  let currentWeight = goalCheckIns.length > 0 ? goalCheckIns[0].y : currentUser.check_ins.sort(function(a,b){
+    return new Date(a.date) - new Date(b.date);
+  })[currentUser.check_ins.length -1].weight
+
+  console.log('goalCheckins: ', goalCheckIns)
   const options = {
     responsive: true,
     plugins: {
@@ -57,7 +84,7 @@ const GoalChart = ({currentUser}) => {
       },
       {
         label: 'Goal',
-        data: [{x: currentGoal.goal_start_date, y: goalCheckIns[0].y}, {x: currentGoal.goal_end_date, y:currentGoal.goal_weight}],
+        data: [{x: currentGoal.goal_start_date, y: currentWeight}, {x: currentGoal.goal_end_date, y:currentGoal.goal_weight}],
         borderColor: '#FFCE0E',
         backgroundColor: '#FFCE0E',
       }
@@ -65,11 +92,17 @@ const GoalChart = ({currentUser}) => {
   };
 
   return(
-    <Line
-      options={options}
-      data={data}
-      style={{vh:50}}
-    />
+    <>
+      <Line
+        options={options}
+        data={data}
+        style={{vh:50}}
+      />
+      <Button variant='warning' onClick={() => navigate(`/goals/${currentGoal.id}/edit`)}>Edit Current Goal</Button>
+      <Button variant='warning' onClick={() => handleDeleteGoal()}>Delete Current Goal</Button>
+    </>
+
+
   )
 }
 
