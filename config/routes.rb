@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   
   resources :check_ins, only: [:create, :show, :update, :destroy]
+  resources :goals, except: [:new, :edit]
+
 
   post "/signup", to: "users#create"
   get "/me", to: "users#show"

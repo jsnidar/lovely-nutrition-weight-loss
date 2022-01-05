@@ -19,6 +19,8 @@ const GoalForm = ({currentUser, updateGoals }) => {
     id: null
   })
 
+  console.log(formData)
+  
   useEffect(() => {
     if(goalId) {
       fetch(`/goals/${goalId}`)
