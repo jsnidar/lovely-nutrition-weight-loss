@@ -25,8 +25,9 @@ function App() {
 
   const updateGoals = (goal, goalId) => {
     const updatedUserInfo = {...currentUser}
-    goalId ? updatedUserInfo.goals.map(priorGoal => {
-      if (priorGoal.id === goalId) {
+    goalId ? updatedUserInfo.goals = updatedUserInfo.goals.map(priorGoal => {
+      console.log(priorGoal.id, parseInt(goalId, 10))
+      if (parseInt(priorGoal.id) === parseInt(goalId, 10)) {
           return goal 
       }else{
           return priorGoal
@@ -43,8 +44,8 @@ function App() {
 
   const updateCheckIns = (checkIn, checkInId) => {
     const updatedUserInfo = {...currentUser}
-    checkInId ? updatedUserInfo.check_ins.map(check_in => {
-      if (check_in.id === checkInId) {
+    checkInId ? updatedUserInfo.check_ins = updatedUserInfo.check_ins.map(check_in => {
+      if (check_in.id === parseInt(checkInId)) {
           return checkIn 
       }else{
           return check_in
