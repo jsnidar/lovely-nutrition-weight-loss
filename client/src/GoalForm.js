@@ -19,8 +19,6 @@ const GoalForm = ({currentUser, updateGoals }) => {
     id: null
   })
 
-  console.log(formData)
-
   useEffect(() => {
     if(goalId) {
       fetch(`/goals/${goalId}`)
@@ -39,7 +37,6 @@ const GoalForm = ({currentUser, updateGoals }) => {
       if(res.ok){
         res.json()
         .then(goal => updateGoals(goal, goalId))
-        .then(navigate('/'));
       }else{
         res.json().then(e => setErrors(e))
       }

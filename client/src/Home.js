@@ -11,7 +11,7 @@ const Home = ({currentUser, deleteCheckIn, deleteGoal}) => {
   const [showGoals, setShowGoals] = useState(false)
 
 
-  console.log(currentUser)
+  console.log("currentUser: ",currentUser)
 
   const renderCheckIns = currentUser.check_ins.sort(function(a,b){
     return new Date(b.date) - new Date(a.date);
@@ -19,7 +19,38 @@ const Home = ({currentUser, deleteCheckIn, deleteGoal}) => {
 
   const renderGoals = currentUser.goals.sort(function(a,b){
     return new Date(b.date) - new Date(a.date);
-  }).map(goal => <GoalCard key={goal.id} goalInfo={goal} deleteGoal={deleteGoal} />)
+  }).map(goal => {
+
+    const year = (date) => date.slice(0,4)
+    const month = (date) => parseInt(date.slice(5,7)) - 1
+    const day = (date) => date.slice(8,10)
+
+    const startDate = new Date(
+      year(goal.goal_start_date),
+      month(goal.goal_start_date),
+      day(goal.goal_start_date)
+    )
+  
+    const endDate = new Date(
+      year(goal.goal_end_date),
+      month(goal.goal_end_date),
+      day(goal.goal_end_date)
+    )
+    
+    let goalCheckIns = []
+
+    currentUser.check_ins.forEach(checkIn => {
+      const checkInDate = new Date(year(checkIn.date),month(checkIn.date),day(checkIn.date))
+      if(checkInDate.valueOf() >= startDate.valueOf() && checkInDate.valueOf() <= endDate.valueOf()){
+        goalCheckIns.push(checkIn)
+      }
+    })
+
+    goalCheckIns = goalCheckIns.sort(function(a,b){
+      return new Date(a.date.valueOf()) - new Date(b.date.valueOf());
+    })
+    return <GoalCard key={goal.id} goalInfo={goal} deleteGoal={deleteGoal} checkIns={goalCheckIns} />
+    })
 
 
   return (

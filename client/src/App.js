@@ -5,12 +5,13 @@ import LogIn from './LogIn';
 import CheckInForm from './CheckInForm';
 import GoalForm from './GoalForm';
 import { useState, useEffect } from 'react';
-import { Route, Routes } from "react-router-dom"
+import { Route, Routes, useNavigate } from "react-router-dom"
 
 function App() {
 
   const [currentUser, setCurrentUser] = useState(null)
 
+  let navigate = useNavigate()
   useEffect(() => {
     // auto-login
     fetch("/me").then((r) => {
@@ -31,6 +32,7 @@ function App() {
           return priorGoal
       }}) : updatedUserInfo.goals.push(goal)
     setCurrentUser(updatedUserInfo)
+    navigate('/')
   }
 
   const deleteGoal = (deletedGoal) => {
@@ -48,6 +50,7 @@ function App() {
           return check_in
       }}) : updatedUserInfo.check_ins.push(checkIn)
     setCurrentUser(updatedUserInfo)
+    navigate('/')
   }
     
   const deleteCheckIn = (deletedCheckIn) => {

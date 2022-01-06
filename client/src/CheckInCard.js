@@ -6,7 +6,11 @@ import { Card, Row, Col, Button } from "react-bootstrap"
 const CheckInCard = ({ checkInInfo, deleteCheckIn }) => {
 
   const [errors, setErrors] = useState(null)
-  const formattedDate = new Date(checkInInfo.date).toString().slice(0, 15);
+  const year = (date) => date.slice(0,4)
+  const month = (date) => parseInt(date.slice(5,7)) - 1
+  const day = (date) => date.slice(8,10)
+
+  const formattedDate = (givenDate) => new Date(year(givenDate),month(givenDate),day(givenDate)).toDateString();
   let navigate = useNavigate();
 
 
@@ -27,7 +31,7 @@ const CheckInCard = ({ checkInInfo, deleteCheckIn }) => {
   return (
     <Card>
       <Card.Body>
-        <Card.Title>Date: {formattedDate}</Card.Title>
+        <Card.Title>Date: {formattedDate(checkInInfo.date)}</Card.Title>
         <Row>
           <Col>
             <Card.Subtitle className="mb-2 text-muted">Weight</Card.Subtitle>
