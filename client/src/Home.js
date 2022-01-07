@@ -63,18 +63,18 @@ const Home = ({currentUser, deleteCheckIn, deleteGoal}) => {
       <Row>
         <h3>Goals</h3>
         <br></br>
-        <h5>Current Goal</h5>
+        {currentUser.goals.length > 0 ? <h5>Current Goal</h5> : null}
       </Row>
       <Row>
-        <GoalChart currentUser={currentUser} deleteGoal={deleteGoal}/>
+        {currentUser.goals.length > 0 ? <GoalChart currentUser={currentUser} deleteGoal={deleteGoal}/> : null}
       </Row>
       <Row>
         <Link to="/goals/new">Create a Goal</Link>
       </Row>
       <Row>
-        <Button variant="warning" onClick={() => setShowGoals(!showGoals)}>
+        {currentUser.goals.length > 0 ? <Button variant="warning" onClick={() => setShowGoals(!showGoals)}>
           {showGoals ? "Hide Goals" : "Show Goals" }
-        </Button>
+        </Button> : null}
       </Row>
       <Row>
         {showGoals ? renderGoals : null }
@@ -83,9 +83,9 @@ const Home = ({currentUser, deleteCheckIn, deleteGoal}) => {
         <h3>Check Ins</h3>
       </Row>
       <Row>
-        <Button variant="warning" onClick={() => setShowCheckins(!showCheckIns)}>
+        {currentUser.check_ins.length > 0 ? <Button variant="warning" onClick={() => setShowCheckins(!showCheckIns)}>
           {showCheckIns ? "Hide Check Ins" : "Show Check Ins" }
-        </Button>
+        </Button> : null}
       </Row>
       <Row>
         {showCheckIns ? renderCheckIns : null }
