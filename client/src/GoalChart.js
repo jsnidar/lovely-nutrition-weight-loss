@@ -1,33 +1,18 @@
 import { useNavigate } from 'react-router-dom';
-import { Button } from 'react-bootstrap';
+import { Button, Container } from 'react-bootstrap';
 import { useState } from 'react';
 import {
   Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
+  registerables,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import 'chartjs-adapter-date-fns';
 import {de} from 'date-fns/locale';
 
-
-
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend
-);
+ChartJS.register(...registerables);
 
 const GoalChart = ({currentUser, deleteGoal}) => {
+
   let navigate = useNavigate()
   const [errors, setErrors] = useState(null)
 
@@ -50,8 +35,6 @@ const GoalChart = ({currentUser, deleteGoal}) => {
     month(currentGoal.goal_end_date),
     day(currentGoal.goal_end_date)
   )
-
-  
 
   const handleDeleteGoal = () => {
     fetch(`/goals/${currentGoal.id}`, {
@@ -77,7 +60,8 @@ const GoalChart = ({currentUser, deleteGoal}) => {
   
   goalCheckIns = goalCheckIns.sort(function(a,b){
     return new Date(a.x.valueOf()) - new Date(b.x.valueOf());
-  })
+  }).map(checkIn => { 
+    return {x: checkIn.x, y: checkIn.y}})
   
   let currentWeight = goalCheckIns.length > 0 ? goalCheckIns[0].y : currentUser.check_ins.sort(function(a,b){
     return new Date(year(a.date),month(a.date),day(a.date)).valueOf() - new Date(year(b.date),month(b.date),day(b.date)).valueOf();
@@ -86,7 +70,34 @@ const GoalChart = ({currentUser, deleteGoal}) => {
   console.log('goalCheckins: ', goalCheckIns)
 
   const options = {
+    animation: false,
+    spanGaps: true,
     responsive: true,
+    scales: {
+      y: {
+        title: {
+          display: true,
+          text: "Weight in lbs"
+        }
+      },
+      x: {
+        adapters: {
+          date: {
+              locale: de
+          }
+      },
+        type: "time",
+        distribution: "linear",
+        time: {
+          parser: "yyyy-MM-dd",
+          unit: "month"
+        },
+        title: {
+          display: true,
+          text: "Date"
+        }
+      }
+    },
     plugins: {
       legend: {position: 'top'},
       title: {
@@ -103,26 +114,34 @@ const GoalChart = ({currentUser, deleteGoal}) => {
         data: goalCheckIns,
         borderColor: 'rgb(53, 162, 235)',
         backgroundColor: 'rgba(53, 162, 235, 0.5)',
+        showLine: true
       },
       {
         label: 'Goal',
         data: [{x: startDate, y: currentWeight}, {x: endDate, y:currentGoal.goal_weight}],
         borderColor: '#FFCE0E',
         backgroundColor: '#FFCE0E',
+        borderDash: [3]
       }
     ],
   };
 
   return(
-    <>
+    <Container style={{
+      position: "relative",
+      margin: "auto",
+      height: "50vh",
+      width: "80vw",
+      }}>
       <Line
         options={options}
         data={data}
         style={{vh:50}}
+        datasetIdKey="id"
       />
       <Button variant='warning' onClick={() => navigate(`/goals/${currentGoal.id}/edit`)}>Edit Current Goal</Button>
       <Button variant='warning' onClick={() => handleDeleteGoal()}>Delete Current Goal</Button>
-    </>
+    </Container>
   )
 }
 

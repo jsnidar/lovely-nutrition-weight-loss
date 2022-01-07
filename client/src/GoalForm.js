@@ -81,12 +81,15 @@ const GoalForm = ({currentUser, updateGoals }) => {
         <Row>
           <Form.Group className="mb-3" controlId="goalName">
             <Form.Label>Goal Name</Form.Label>
-            <Form.Control 
+            <Form.Control
               type="text" 
               placeholder="Enter a name for your goal here" 
               value={formData.goal_name}
               onChange={e => setFormData({...formData, goal_name: e.target.value})}
-            />
+            ></Form.Control>
+            <Form.Text className="text-muted">
+              Examples: Fall 2022, my last 10 pounds!, my goal weight...
+            </Form.Text>
           </Form.Group>
         </Row>
         <Row>
@@ -116,6 +119,11 @@ const GoalForm = ({currentUser, updateGoals }) => {
         <Row>
           <Col>
             Current Weight: {currentWeight}
+            <br></br>
+            <br></br>
+            Current BMI: {parseInt(currentWeight/(currentUser.height * currentUser.height) * 703)}
+            <br></br>
+            <br></br>
             <Form.Group className="mb-3" controlId="weight">
               <Form.Label>Goal Weight (lbs)</Form.Label>
               <Form.Control 
@@ -125,6 +133,9 @@ const GoalForm = ({currentUser, updateGoals }) => {
                 onChange={e => setFormData({...formData, goal_weight: parseInt(e.target.value)})}
               />
             </Form.Group>
+            Goal BMI: {typeof(formData.goal_weight) === 'number' ? parseInt(formData.goal_weight/(currentUser.height * currentUser.height) * 703) : ""}
+            <br></br>
+            <br></br>
           </Col>
         </Row>
         <Button 
