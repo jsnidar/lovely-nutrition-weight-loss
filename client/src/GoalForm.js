@@ -138,13 +138,19 @@ const GoalForm = ({currentUser, updateGoals }) => {
             <br></br>
           </Col>
         </Row>
-        <Button 
-          variant="warning" 
-          type="submit"
-          onClick={e => handleGoalSubmit(e)}
-        >
-          Submit
-        </Button>
+        <Row className="d-flex justify-content-around">
+          <Button 
+            className="w-50 m-2"
+            variant="warning" 
+            type="submit"
+            onClick={e => handleGoalSubmit(e)}
+          >Submit</Button>
+          <Button 
+            className="w-50 m-2"
+            variant="warning" 
+            onClick={e => navigate('/')}
+          >Cancel</Button>
+        </Row>
       </Form> 
     </Container>
   )

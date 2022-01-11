@@ -10,10 +10,9 @@ import { Route, Routes, useNavigate } from "react-router-dom"
 function App() {
 
   const [currentUser, setCurrentUser] = useState(null)
-
   let navigate = useNavigate()
+
   useEffect(() => {
-    // auto-login
     fetch("/me").then((r) => {
       if (r.ok) {
         r.json().then((user) => setCurrentUser(user));
@@ -26,7 +25,6 @@ function App() {
   const updateGoals = (goal, goalId) => {
     const updatedUserInfo = {...currentUser}
     goalId ? updatedUserInfo.goals = updatedUserInfo.goals.map(priorGoal => {
-      console.log(priorGoal.id, parseInt(goalId, 10))
       if (parseInt(priorGoal.id) === parseInt(goalId, 10)) {
           return goal 
       }else{
@@ -60,9 +58,16 @@ function App() {
     setCurrentUser(updatedUserInfo)
   }
 
+  const year = (date) => date.slice(0,4)
+  const month = (date) => parseInt(date.slice(5,7)) - 1
+  const day = (date) => date.slice(8,10)
+
   return (
     <div>
-      <NavBar currentUser={currentUser} setCurrentUser={setCurrentUser} />
+      <NavBar 
+        currentUser={currentUser} 
+        setCurrentUser={setCurrentUser} 
+      />
       <Routes>
         <Route 
           path='/' 
@@ -70,7 +75,10 @@ function App() {
             <Home 
               deleteCheckIn={deleteCheckIn}
               deleteGoal={deleteGoal}
-              currentUser={currentUser} 
+              currentUser={currentUser}
+              year={year}
+              month={month}
+              day={day} 
             />
           } 
         />
@@ -89,13 +97,19 @@ function App() {
           <Route
             path='/goals/:goalId/edit'
             element={
-              <GoalForm currentUser={currentUser} updateGoals={updateGoals} />
+              <GoalForm 
+                currentUser={currentUser} 
+                updateGoals={updateGoals} 
+              />
             }
           />
           <Route
             path='/goals/new'
             element={
-              <GoalForm currentUser={currentUser} updateGoals={updateGoals} />
+              <GoalForm 
+                currentUser={currentUser} 
+                updateGoals={updateGoals}
+              />
             } 
           />
       </Routes>

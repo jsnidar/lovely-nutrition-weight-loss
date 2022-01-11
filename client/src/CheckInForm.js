@@ -124,7 +124,9 @@ const CheckInForm = ({updateCheckIns}) => {
                 type="number" 
                 placeholder="Enter weight (lbs)"
                 value={formData.weight}
-                onChange={e => setFormData({...formData, weight: parseInt(e.target.value)})}
+                onChange={e => setFormData(
+                  {...formData, weight: parseInt(e.target.value)}
+                )}
               />
             </Form.Group>
           </Col>
@@ -133,7 +135,9 @@ const CheckInForm = ({updateCheckIns}) => {
               <Form.Label>Left Arm (in) </Form.Label>
               <Form.Select 
                 value={formData.left_arm_measurement}
-                onChange={e => setFormData({...formData, left_arm_measurement: parseFloat(e.target.value)})}
+                onChange={e => setFormData(
+                  {...formData, left_arm_measurement: parseFloat(e.target.value)}
+                )}
                 aria-label="Select a measurement"
               >
                 <option>Select a measurement</option>
@@ -146,7 +150,9 @@ const CheckInForm = ({updateCheckIns}) => {
               <Form.Label>Left Thigh (in)</Form.Label>
               <Form.Select 
                 value={formData.left_thigh_measurement}
-                onChange={e => setFormData({...formData, left_thigh_measurement: parseFloat(e.target.value)})}
+                onChange={e => setFormData(
+                  {...formData, left_thigh_measurement: parseFloat(e.target.value)}
+                )}
                 aria-label="Select a measurement"
               >
                 <option>Select a measurement</option>
@@ -161,7 +167,9 @@ const CheckInForm = ({updateCheckIns}) => {
               <Form.Label>Waist (in)</Form.Label>
               <Form.Select 
                 value={formData.waist}
-                onChange={e => setFormData({...formData, waist: parseFloat(e.target.value)})}
+                onChange={e => setFormData(
+                  {...formData, waist: parseFloat(e.target.value)}
+                )}
                 aria-label="Select a measurement"
               >
                 <option>Select a measurement</option>
@@ -174,7 +182,9 @@ const CheckInForm = ({updateCheckIns}) => {
               <Form.Label>Hips (in)</Form.Label>
               <Form.Select 
                 value={formData.hips}
-                onChange={e => setFormData({...formData, hips: parseFloat(e.target.value)})}
+                onChange={e => setFormData(
+                  {...formData, hips: parseFloat(e.target.value)}
+                )}
                 aria-label="Select a measurement"
               >
                 <option>Select a measurement</option>
@@ -187,7 +197,9 @@ const CheckInForm = ({updateCheckIns}) => {
               <Form.Label>Chest (in)</Form.Label>
               <Form.Select 
                 value={formData.chest}
-                onChange={e => setFormData({...formData, chest: parseFloat(e.target.value)})}
+                onChange={e => setFormData(
+                  {...formData, chest: parseFloat(e.target.value)}
+                )}
                 aria-label="Select a measurement"
               >
                 <option>Select a measurement</option>
@@ -203,17 +215,25 @@ const CheckInForm = ({updateCheckIns}) => {
               type="text" 
               placeholder="Enter notes here" 
               value={formData.notes}
-              onChange={e => setFormData({...formData, notes: e.target.value})}
+              onChange={e => setFormData(
+                {...formData, notes: e.target.value}
+              )}
             />
           </Form.Group>
         </Row>
-        <Button 
-          variant="warning" 
-          type="submit"
-          onClick={e => handleCheckInSubmit(e)}
-        >
-          Submit
-        </Button>
+        <Row className="d-flex justify-content-around">
+          <Button 
+            className="w-50 m-2"
+            variant="warning" 
+            type="submit"
+            onClick={e => handleCheckInSubmit(e)}
+          >Submit</Button>
+          <Button 
+            className="w-50 m-2"
+            variant="warning" 
+            onClick={e => navigate('/')}
+          >Cancel</Button>
+        </Row>
       </Form> 
     </Container>
   )

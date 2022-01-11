@@ -3,16 +3,16 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom"
 import { Card, Row, Col, Button } from "react-bootstrap"
 
-const CheckInCard = ({ checkInInfo, deleteCheckIn }) => {
+const CheckInCard = ({ day, month, year, checkInInfo, deleteCheckIn }) => {
 
   const [errors, setErrors] = useState(null)
-  const year = (date) => date.slice(0,4)
-  const month = (date) => parseInt(date.slice(5,7)) - 1
-  const day = (date) => date.slice(8,10)
-
-  const formattedDate = (givenDate) => new Date(year(givenDate),month(givenDate),day(givenDate)).toDateString();
   let navigate = useNavigate();
 
+  const formattedDate = (givenDate) => new Date(
+    year(givenDate),
+    month(givenDate),
+    day(givenDate)
+  ).toDateString();
 
   const handleDeleteCheckIn = () => {
     fetch(`/check_ins/${checkInInfo.id}`, {
@@ -39,17 +39,42 @@ const CheckInCard = ({ checkInInfo, deleteCheckIn }) => {
           </Col>
           <Col>
             <Card.Subtitle className="mb-2 text-muted">Measurements</Card.Subtitle>
-            {checkInInfo.left_arm_measurement ? <Card.Text>Left Arm: {checkInInfo.left_arm_measurement} in.</Card.Text> : null }
-            {checkInInfo.left_thigh_measurement ? <Card.Text>Left Thigh: {checkInInfo.left_thigh_measurement} in.</Card.Text> : null}
-            {checkInInfo.waist ? <Card.Text>Waist: {checkInInfo.waist} in.</Card.Text> : null}
-            {checkInInfo.hips ? <Card.Text>Hips: {checkInInfo.hips} in.</Card.Text> : null}
-            {checkInInfo.chest ? <Card.Text>Chest: {checkInInfo.chest} in.</Card.Text> : null}
+            {checkInInfo.left_arm_measurement ? 
+              <Card.Text>
+                Left Arm: {checkInInfo.left_arm_measurement} in.
+              </Card.Text> : null
+            }
+            {checkInInfo.left_thigh_measurement ? 
+              <Card.Text>
+                Left Thigh: {checkInInfo.left_thigh_measurement} in.
+              </Card.Text> : null
+            }
+            {checkInInfo.waist ? 
+              <Card.Text>
+                Waist: {checkInInfo.waist} in.
+              </Card.Text> : null
+            }
+            {checkInInfo.hips ? 
+              <Card.Text>
+                Hips: {checkInInfo.hips} in.
+              </Card.Text> : null
+            }
+            {checkInInfo.chest ? 
+              <Card.Text>
+                Chest: {checkInInfo.chest} in.
+              </Card.Text> : null
+            }
             <Card.Text>Notes: {checkInInfo.notes}</Card.Text>
           </Col>
         </Row>
-        <Button variant='warning' onClick={() => handleDeleteCheckIn()}>Delete</Button>
-        <Button variant='warning' onClick={() => navigate(`/check-ins/${checkInInfo.id}/edit`)}>Edit</Button>
-        {/* <Card.Link href="0">Card Link</Card.Link> */}
+        <Button 
+          variant='warning' 
+          onClick={() => handleDeleteCheckIn()}
+        >Delete</Button>
+        <Button 
+          variant='warning' 
+          onClick={() => navigate(`/check-ins/${checkInInfo.id}/edit`)}
+        >Edit</Button>
       </Card.Body>
     </Card>
   )

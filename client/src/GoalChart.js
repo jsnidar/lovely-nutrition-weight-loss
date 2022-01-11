@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { Button, Container } from 'react-bootstrap';
+import { Button, Container, Row } from 'react-bootstrap';
 import { useState } from 'react';
 import {
   Chart as ChartJS,
@@ -7,21 +7,25 @@ import {
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import 'chartjs-adapter-date-fns';
-import {de} from 'date-fns/locale';
+import {enGB} from 'date-fns/locale';
 
 ChartJS.register(...registerables);
 
-const GoalChart = ({currentUser, deleteGoal}) => {
+const GoalChart = ({day, month, year, currentUser, deleteGoal}) => {
 
   let navigate = useNavigate()
   const [errors, setErrors] = useState(null)
 
-  const year = (date) => date.slice(0,4)
-  const month = (date) => parseInt(date.slice(5,7)) - 1
-  const day = (date) => date.slice(8,10)
-
   const currentGoal = currentUser.goals.sort(function(a,b){
-    return new Date(year(a.goal_end_date),month(a.goal_end_date),day(a.goal_end_date)) - new Date(year(b.goal_end_date),month(b.goal_end_date),day(b.goal_end_date));
+    return new Date(
+      year(a.goal_end_date),
+      month(a.goal_end_date),
+      day(a.goal_end_date)
+    ) - new Date(
+      year(b.goal_end_date),
+      month(b.goal_end_date),
+      day(b.goal_end_date)
+    );
   })[currentUser.goals.length -1]
 
   const startDate = new Date(
@@ -36,24 +40,18 @@ const GoalChart = ({currentUser, deleteGoal}) => {
     day(currentGoal.goal_end_date)
   )
 
-  const handleDeleteGoal = () => {
-    fetch(`/goals/${currentGoal.id}`, {
-      method: "DELETE"
-    })
-    .then(res => {
-      if(res.ok){
-        res.json()
-        .then(() => deleteGoal(currentGoal));
-      }else{
-        res.json().then(e => setErrors(e))
-      }
-    })
-  }
-
   let goalCheckIns = []
   currentUser.check_ins.forEach(checkIn => {
-    const checkInDate = new Date(year(checkIn.date),month(checkIn.date),day(checkIn.date))
-    if(checkInDate.valueOf() >= startDate.valueOf() && checkInDate.valueOf() <= endDate.valueOf()){
+    const checkInDate = new Date(
+      year(checkIn.date),
+      month(checkIn.date),
+      day(checkIn.date)
+    )
+
+    if(
+      checkInDate.valueOf() >= startDate.valueOf() && 
+      checkInDate.valueOf() <= endDate.valueOf()
+    ){
       goalCheckIns.push({x: checkIn.date, y: checkIn.weight})
     }
   })
@@ -61,13 +59,37 @@ const GoalChart = ({currentUser, deleteGoal}) => {
   goalCheckIns = goalCheckIns.sort(function(a,b){
     return new Date(a.x.valueOf()) - new Date(b.x.valueOf());
   }).map(checkIn => { 
-    return {x: checkIn.x, y: checkIn.y}})
+    return {x: checkIn.x, y: checkIn.y}
+    }
+  )
   
-  let currentWeight = goalCheckIns.length > 0 ? goalCheckIns[0].y : currentUser.check_ins.sort(function(a,b){
-    return new Date(year(a.date),month(a.date),day(a.date)).valueOf() - new Date(year(b.date),month(b.date),day(b.date)).valueOf();
-  })[currentUser.check_ins.length -1].weight
+  let currentWeight = goalCheckIns.length > 0 ? 
+    goalCheckIns[0].y : 
+    currentUser.check_ins.sort(function(a,b){
+      return new Date(
+        year(a.date),
+        month(a.date),
+        day(a.date)
+      ).valueOf() - new Date(
+        year(b.date),
+        month(b.date),
+        day(b.date)
+      ).valueOf();
+    })[currentUser.check_ins.length -1].weight
 
-  console.log('goalCheckins: ', goalCheckIns)
+    const handleDeleteGoal = () => {
+      fetch(`/goals/${currentGoal.id}`, {
+        method: "DELETE"
+      })
+      .then(res => {
+        if(res.ok){
+          res.json()
+          .then(() => deleteGoal(currentGoal));
+        }else{
+          res.json().then(e => setErrors(e))
+        }
+      })
+    }
 
   const options = {
     animation: false,
@@ -83,7 +105,7 @@ const GoalChart = ({currentUser, deleteGoal}) => {
       x: {
         adapters: {
           date: {
-              locale: de
+              locale: enGB
           }
       },
         type: "time",
@@ -118,7 +140,7 @@ const GoalChart = ({currentUser, deleteGoal}) => {
       },
       {
         label: 'Goal',
-        data: [{x: startDate, y: currentWeight}, {x: endDate, y:currentGoal.goal_weight}],
+        data: [{x: startDate, y: currentWeight}, {x: endDate, y: currentGoal.goal_weight}],
         borderColor: '#FFCE0E',
         backgroundColor: '#FFCE0E',
         borderDash: [3]
@@ -127,20 +149,33 @@ const GoalChart = ({currentUser, deleteGoal}) => {
   };
 
   return(
-    <Container style={{
-      position: "relative",
-      margin: "auto",
-      height: "50vh",
-      width: "80vw",
-      }}>
-      <Line
-        options={options}
-        data={data}
-        style={{vh:50}}
-        datasetIdKey="id"
-      />
-      <Button variant='warning' onClick={() => navigate(`/goals/${currentGoal.id}/edit`)}>Edit Current Goal</Button>
-      <Button variant='warning' onClick={() => handleDeleteGoal()}>Delete Current Goal</Button>
+    // <Container style={{
+    //   position: "relative",
+    //   margin: "auto",
+    //   height: "50vh",
+    //   width: "80vw",
+    //   }}>
+    <Container className="border border-secondary">
+      <Row>
+        <Line
+          options={options}
+          data={data}
+          style={{vh:50}}
+          datasetIdKey="id"
+        />
+      </Row>
+      <Row className='d-flex justify-content-around'>
+          <Button 
+            className="w-50 m-2" 
+            variant='warning' 
+            onClick={() => navigate(`/goals/${currentGoal.id}/edit`)}
+          >Edit Current Goal</Button>
+          <Button 
+            className="w-50 m-2" 
+            variant='warning' 
+            onClick={() => handleDeleteGoal()}
+          >Delete Current Goal</Button>
+      </Row>
     </Container>
   )
 }
