@@ -1,4 +1,4 @@
-class CheckInsController < ApplicationController
+class Api::CheckInsController < ApplicationController
 
   def create
     check_in = @current_user.check_ins.create!(check_in_params)
