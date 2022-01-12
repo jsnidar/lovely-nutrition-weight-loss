@@ -1,4 +1,4 @@
-import { Form, Container, Row, Col, Button } from 'react-bootstrap';
+import { Form, Container, Row, Col, Button, Image } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
 import ErrorAlert from './ErrorAlert';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -72,7 +72,7 @@ const GoalForm = ({currentUser, updateGoals }) => {
 
   return (
     <Container>
-      <br></br>
+      <Image src="/lovely_logo.png" />
       <Form>
         <Row>
           { goalId ? <h1>Edit Goal</h1> : <h1>Create a Goal</h1> }
