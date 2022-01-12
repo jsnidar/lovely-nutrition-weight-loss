@@ -7,7 +7,7 @@ const Home = ({ day, month, year, currentUser, deleteCheckIn, deleteGoal}) => {
   return (
     <Container className='m-2 p-2'>
       <Row className='p-2'>
-        <Image src="lovely_logo/lovely_logo.png" />
+        <Image src="app/assets/lovely_logo.png" />
         <h1>Weight Loss Tracker</h1>
       </Row>
       <GoalsContainer 
