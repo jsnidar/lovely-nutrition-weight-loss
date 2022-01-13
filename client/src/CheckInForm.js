@@ -106,9 +106,6 @@ const CheckInForm = ({updateCheckIns}) => {
           { errors ? <ErrorAlert errors={errors.errors} /> : null }
         </Row>
         <Row>
-          Required parts are marked with *
-        </Row>
-        <Row>
           <Form.Group className="mb-3" controlId="date">
             <Form.Label>Date*</Form.Label>
             <Form.Control 
@@ -117,6 +114,7 @@ const CheckInForm = ({updateCheckIns}) => {
               value={formData.date}
               onChange={e => setFormData({...formData, date: e.target.value})}
             />
+            <Form.Text className="text-muted">Required</Form.Text>
           </Form.Group>
         </Row>
         <Row>
@@ -131,6 +129,7 @@ const CheckInForm = ({updateCheckIns}) => {
                   {...formData, weight: parseInt(e.target.value)}
                 )}
               />
+              <Form.Text className="text-muted">Required</Form.Text>
             </Form.Group>
           </Col>
           <Col>
