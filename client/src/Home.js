@@ -5,7 +5,7 @@ import CheckInsContainer from './CheckInsContainer';
 const Home = ({ day, month, year, currentUser, deleteCheckIn, deleteGoal}) => {
 
   return (
-    <Container className='m-2 p-2'>
+    <Container className='p-2 d-flex justify-content-around'>
       <Row className='p-2'>
         <Image src="/lovely_logo.png" />
         <h1>Weight Loss Tracker</h1>
