@@ -4,7 +4,7 @@ import { Container, Navbar, Nav, Button } from 'react-bootstrap';
 const NavBar = ({ setCurrentUser, currentUser }) => {
 
   function handleLogoutClick() {
-    fetch("/logout", { method: "DELETE" }).then((r) => {
+    fetch("/api/logout", { method: "DELETE" }).then((r) => {
       if (r.ok) {
         setCurrentUser(null);
       }
