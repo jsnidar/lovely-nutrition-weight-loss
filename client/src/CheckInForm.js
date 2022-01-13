@@ -106,8 +106,11 @@ const CheckInForm = ({updateCheckIns}) => {
           { errors ? <ErrorAlert errors={errors.errors} /> : null }
         </Row>
         <Row>
+          Required parts are marked with *
+        </Row>
+        <Row>
           <Form.Group className="mb-3" controlId="date">
-            <Form.Label>Date</Form.Label>
+            <Form.Label>Date*</Form.Label>
             <Form.Control 
               type="date" 
               placeholder="Enter measurement in inches" 
@@ -119,7 +122,7 @@ const CheckInForm = ({updateCheckIns}) => {
         <Row>
           <Col>
             <Form.Group className="mb-3" controlId="weight">
-              <Form.Label>Weight (lbs)</Form.Label>
+              <Form.Label>Weight (lbs)*</Form.Label>
               <Form.Control 
                 type="number" 
                 placeholder="Enter weight (lbs)"

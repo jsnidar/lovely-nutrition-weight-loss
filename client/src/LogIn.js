@@ -11,8 +11,8 @@ const LogIn = ({ setCurrentUser }) => {
   return (
     <>
       <Container>
-        <Image src="lovely_logo.png" fluid />
-
+        <Image src="/lovely_logo.png" fluid />
+        <h1>Weight Loss Tracker</h1>
         { showSignIn ? (<>
           <SignInForm setCurrentUser={setCurrentUser} />
           <br></br>
