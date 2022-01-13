@@ -21,14 +21,14 @@ const GoalForm = ({currentUser, updateGoals }) => {
 
   useEffect(() => {
     if(goalId) {
-      fetch(`/goals/${goalId}`)
+      fetch(`/api/goals/${goalId}`)
       .then(r => r.json())
       .then(goal => setFormData(goal))
     }
   }, [goalId])
   
   const editGoal = () => {
-    fetch(`/goals/${goalId}`, {
+    fetch(`/api/goals/${goalId}`, {
       method: "PATCH",
       headers: {'Content-Type':'application/json'},
       body:JSON.stringify(formData)
@@ -44,7 +44,7 @@ const GoalForm = ({currentUser, updateGoals }) => {
   }
 
   const createGoal = () => {
-    fetch('/goals', {
+    fetch('/api/goals', {
       method: "POST",
       headers: {'Content-Type':'application/json'},
       body:JSON.stringify(formData)

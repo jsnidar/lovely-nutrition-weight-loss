@@ -24,7 +24,7 @@ const CheckInForm = ({updateCheckIns}) => {
 
   useEffect(() => {
     if(checkInId) {
-      fetch(`/check_ins/${checkInId}`)
+      fetch(`/api/check_ins/${checkInId}`)
       .then(r => r.json())
       .then(checkIn => {
         const formattedCheckIn = {
@@ -58,7 +58,7 @@ const CheckInForm = ({updateCheckIns}) => {
   const renderMeasurements = measurementDropDownValues.map(value => <option key={value} value={value}>{value}</option>)
   
   const editCheckIn = () => {
-    fetch(`/check_ins/${checkInId}`, {
+    fetch(`/api/check_ins/${checkInId}`, {
       method: "PATCH",
       headers: {'Content-Type':'application/json'},
       body:JSON.stringify(formData)
@@ -75,7 +75,7 @@ const CheckInForm = ({updateCheckIns}) => {
   }
 
   const createCheckIn = () => {
-    fetch('/check_ins', {
+    fetch('/api/check_ins', {
       method: "POST",
       headers: {'Content-Type':'application/json'},
       body:JSON.stringify(formData)

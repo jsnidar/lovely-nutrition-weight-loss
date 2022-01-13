@@ -31,7 +31,7 @@ const SignUpForm = ({ setCurrentUser }) => {
       password_confirmation: formData.password_confirmation,
       username: formData.username
     }
-    fetch('/signup', {
+    fetch('/api/signup', {
       method: "POST",
       headers: {'Content-Type':'application/json'},
       body:JSON.stringify(user)

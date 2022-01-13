@@ -13,7 +13,7 @@ function App() {
   let navigate = useNavigate()
 
   useEffect(() => {
-    fetch("/me").then((r) => {
+    fetch("/api/me").then((r) => {
       if (r.ok) {
         r.json().then((user) => setCurrentUser(user));
       }

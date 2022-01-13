@@ -15,7 +15,7 @@ const CheckInCard = ({ day, month, year, checkInInfo, deleteCheckIn }) => {
   ).toDateString();
 
   const handleDeleteCheckIn = () => {
-    fetch(`/check_ins/${checkInInfo.id}`, {
+    fetch(`/api/check_ins/${checkInInfo.id}`, {
       method: "DELETE"
     })
     .then(res => {

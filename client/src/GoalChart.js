@@ -78,7 +78,7 @@ const GoalChart = ({day, month, year, currentUser, deleteGoal}) => {
     })[currentUser.check_ins.length -1].weight
 
     const handleDeleteGoal = () => {
-      fetch(`/goals/${currentGoal.id}`, {
+      fetch(`/api/goals/${currentGoal.id}`, {
         method: "DELETE"
       })
       .then(res => {
