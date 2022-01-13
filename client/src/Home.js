@@ -10,13 +10,13 @@ const Home = ({ day, month, year, currentUser, deleteCheckIn, deleteGoal}) => {
         <Image src="/lovely_logo.png" />
         <h1>Weight Loss Tracker</h1>
       </Row>
-      <GoalsContainer 
+      {currentUser.check_ins.length > 0 ? <GoalsContainer 
         year={year}
         month={month}
         day={day}
         currentUser={currentUser} 
         deleteGoal={deleteGoal} 
-      />
+      /> : null }
       <CheckInsContainer 
         year={year}
         month={month}
