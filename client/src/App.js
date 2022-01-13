@@ -10,6 +10,7 @@ import { Route, Routes, useNavigate } from "react-router-dom"
 function App() {
 
   const [currentUser, setCurrentUser] = useState(null)
+  
   let navigate = useNavigate()
 
   useEffect(() => {
