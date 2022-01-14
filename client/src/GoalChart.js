@@ -164,18 +164,6 @@ const GoalChart = ({day, month, year, currentUser, deleteGoal}) => {
           datasetIdKey="id"
         />
       </Row>
-      <Row className='d-flex justify-content-around'>
-          <Button 
-            className="w-50 m-2" 
-            variant='warning' 
-            onClick={() => navigate(`/goals/${currentGoal.id}/edit`)}
-          >Edit Current Goal</Button>
-          <Button 
-            className="w-50 m-2" 
-            variant='warning' 
-            onClick={() => handleDeleteGoal()}
-          >Delete Current Goal</Button>
-      </Row>
     </Container>
   )
 }

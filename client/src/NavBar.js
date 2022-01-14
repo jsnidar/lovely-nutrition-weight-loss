@@ -21,6 +21,8 @@ const NavBar = ({ setCurrentUser, currentUser }) => {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav>
               <Nav.Link href="/">Home</Nav.Link>
+              <Nav.Link href="/goals/new">Create Goal</Nav.Link>
+              <Nav.Link href="/check-ins/new">Add Check In</Nav.Link>
               <Button variant="outline-warning" onClick={handleLogoutClick}>
                 Logout
               </Button>
