@@ -72,7 +72,9 @@ const GoalForm = ({currentUser, updateGoals }) => {
 
   return (
     <Container>
-      <Image src="/lovely_logo.png" />
+      <Row className='p-2'>
+        <Image src="/lovely_logo.png" />
+      </Row>
       <Form>
         <Row>
           { goalId ? <h1>Edit Goal</h1> : <h1>Create a Goal</h1> }
