@@ -99,7 +99,9 @@ const CheckInForm = ({updateCheckIns}) => {
 
   return (
     <Container>
-      <br></br>
+      <Row className='p-2'>
+        <Image src="/lovely_logo.png" />
+      </Row>
       <Form>
         <Row>
           { checkInId ? <h1>Edit Check In</h1> : <h1>Create a New Check In</h1> }
