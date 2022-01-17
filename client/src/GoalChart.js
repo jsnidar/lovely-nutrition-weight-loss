@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { Button, Container, Row } from 'react-bootstrap';
+import { Container, Row } from 'react-bootstrap';
 import { useState } from 'react';
 import {
   Chart as ChartJS,
@@ -12,9 +12,6 @@ import {enGB} from 'date-fns/locale';
 ChartJS.register(...registerables);
 
 const GoalChart = ({day, month, year, currentUser, deleteGoal}) => {
-
-  let navigate = useNavigate()
-  const [errors, setErrors] = useState(null)
 
   const currentGoal = currentUser.goals.sort(function(a,b){
     return new Date(
@@ -77,20 +74,6 @@ const GoalChart = ({day, month, year, currentUser, deleteGoal}) => {
       ).valueOf();
     })[currentUser.check_ins.length -1].weight
 
-    const handleDeleteGoal = () => {
-      fetch(`/api/goals/${currentGoal.id}`, {
-        method: "DELETE"
-      })
-      .then(res => {
-        if(res.ok){
-          res.json()
-          .then(() => deleteGoal(currentGoal));
-        }else{
-          res.json().then(e => setErrors(e))
-        }
-      })
-    }
-
   const options = {
     animation: false,
     spanGaps: true,
@@ -149,12 +132,6 @@ const GoalChart = ({day, month, year, currentUser, deleteGoal}) => {
   };
 
   return(
-    // <Container style={{
-    //   position: "relative",
-    //   margin: "auto",
-    //   height: "50vh",
-    //   width: "80vw",
-    //   }}>
     <Container className="border border-secondary">
       <Row>
         <Line
