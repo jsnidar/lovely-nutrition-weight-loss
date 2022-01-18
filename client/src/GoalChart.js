@@ -1,6 +1,4 @@
-import { useNavigate } from 'react-router-dom';
 import { Container, Row } from 'react-bootstrap';
-import { useState } from 'react';
 import {
   Chart as ChartJS,
   registerables,
@@ -11,7 +9,7 @@ import {enGB} from 'date-fns/locale';
 
 ChartJS.register(...registerables);
 
-const GoalChart = ({day, month, year, currentUser, deleteGoal}) => {
+const GoalChart = ({day, month, year, currentUser}) => {
 
   const currentGoal = currentUser.goals.sort(function(a,b){
     return new Date(
@@ -80,26 +78,21 @@ const GoalChart = ({day, month, year, currentUser, deleteGoal}) => {
     responsive: true,
     scales: {
       y: {
-        title: {
-          display: true,
-          text: "Weight in lbs"
-        }
+        title: {display: true, text: "Weight in lbs"}
       },
       x: {
         adapters: {
-          date: {
-              locale: enGB
+          date: {locale: enGB},
+          type: "time",
+          distribution: "linear",
+          time: {
+            parser: "yyyy-MM-dd",
+            unit: "month"
+          },
+          title: {
+            display: true,
+            text: "Date"
           }
-      },
-        type: "time",
-        distribution: "linear",
-        time: {
-          parser: "yyyy-MM-dd",
-          unit: "month"
-        },
-        title: {
-          display: true,
-          text: "Date"
         }
       }
     },

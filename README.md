@@ -1,9 +1,10 @@
-# Project Template: React/Rails API
+# Lovely Nutrition Weight Loss Tracker
 
 ## Description
 
-This project is scaffolded so that you can build a React frontend and Rails
-backend together, and easily deploy them to Heroku.
+Welcome to the Lovely Nutrition Weight Loss Tracker. This application allows users to track their weight loss over time. They can create check ins with a date and weight as well as enter goals. When users have created a goal and have a check in then they will see a line graph that displays their data. 
+
+Here is a <a href="https://watch.screencastify.com/v/W1fjBS6PIxBKOmXFbyQg">link</a> to a video description of the application: 
 
 ## Requirements
 
