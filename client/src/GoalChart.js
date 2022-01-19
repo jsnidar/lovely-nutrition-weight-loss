@@ -1,4 +1,4 @@
-import { Container, Row } from 'react-bootstrap';
+import { Container} from 'react-bootstrap';
 import {
   Chart as ChartJS,
   registerables,
@@ -12,15 +12,7 @@ ChartJS.register(...registerables);
 const GoalChart = ({day, month, year, currentUser}) => {
 
   const currentGoal = currentUser.goals.sort(function(a,b){
-    return new Date(
-      year(a.goal_end_date),
-      month(a.goal_end_date),
-      day(a.goal_end_date)
-    ) - new Date(
-      year(b.goal_end_date),
-      month(b.goal_end_date),
-      day(b.goal_end_date)
-    );
+    return new Date(year(a.goal_end_date),month(a.goal_end_date),day(a.goal_end_date)) - new Date(year(b.goal_end_date),month(b.goal_end_date),day(b.goal_end_date));
   })[currentUser.goals.length -1]
 
   const startDate = new Date(
@@ -37,16 +29,8 @@ const GoalChart = ({day, month, year, currentUser}) => {
 
   let goalCheckIns = []
   currentUser.check_ins.forEach(checkIn => {
-    const checkInDate = new Date(
-      year(checkIn.date),
-      month(checkIn.date),
-      day(checkIn.date)
-    )
-
-    if(
-      checkInDate.valueOf() >= startDate.valueOf() && 
-      checkInDate.valueOf() <= endDate.valueOf()
-    ){
+    const checkInDate = new Date(year(checkIn.date),month(checkIn.date),day(checkIn.date))
+    if(checkInDate.valueOf() >= startDate.valueOf() && checkInDate.valueOf() <= endDate.valueOf()){
       goalCheckIns.push({x: checkIn.date, y: checkIn.weight})
     }
   })
@@ -54,23 +38,11 @@ const GoalChart = ({day, month, year, currentUser}) => {
   goalCheckIns = goalCheckIns.sort(function(a,b){
     return new Date(a.x.valueOf()) - new Date(b.x.valueOf());
   }).map(checkIn => { 
-    return {x: checkIn.x, y: checkIn.y}
-    }
-  )
+    return {x: checkIn.x, y: checkIn.y}})
   
-  let currentWeight = goalCheckIns.length > 0 ? 
-    goalCheckIns[0].y : 
-    currentUser.check_ins.sort(function(a,b){
-      return new Date(
-        year(a.date),
-        month(a.date),
-        day(a.date)
-      ).valueOf() - new Date(
-        year(b.date),
-        month(b.date),
-        day(b.date)
-      ).valueOf();
-    })[currentUser.check_ins.length -1].weight
+  let currentWeight = goalCheckIns.length > 0 ? goalCheckIns[0].y : currentUser.check_ins.sort(function(a,b){
+    return new Date(year(a.date),month(a.date),day(a.date)).valueOf() - new Date(year(b.date),month(b.date),day(b.date)).valueOf();
+  })[currentUser.check_ins.length -1].weight
 
   const options = {
     animation: false,
@@ -78,21 +50,26 @@ const GoalChart = ({day, month, year, currentUser}) => {
     responsive: true,
     scales: {
       y: {
-        title: {display: true, text: "Weight in lbs"}
+        title: {
+          display: true,
+          text: "Weight in lbs"
+        }
       },
       x: {
         adapters: {
-          date: {locale: enGB},
-          type: "time",
-          distribution: "linear",
-          time: {
-            parser: "yyyy-MM-dd",
-            unit: "month"
-          },
-          title: {
-            display: true,
-            text: "Date"
+          date: {
+              locale: enGB
           }
+      },
+        type: "time",
+        distribution: "linear",
+        time: {
+          parser: "yyyy-MM-dd",
+          unit: "month"
+        },
+        title: {
+          display: true,
+          text: "Date"
         }
       }
     },
@@ -116,7 +93,7 @@ const GoalChart = ({day, month, year, currentUser}) => {
       },
       {
         label: 'Goal',
-        data: [{x: startDate, y: currentWeight}, {x: endDate, y: currentGoal.goal_weight}],
+        data: [{x: startDate, y: currentWeight}, {x: endDate, y:currentGoal.goal_weight}],
         borderColor: '#FFCE0E',
         backgroundColor: '#FFCE0E',
         borderDash: [3]
@@ -125,15 +102,13 @@ const GoalChart = ({day, month, year, currentUser}) => {
   };
 
   return(
-    <Container className="border border-secondary">
-      <Row>
-        <Line
-          options={options}
-          data={data}
-          style={{vh:50}}
-          datasetIdKey="id"
-        />
-      </Row>
+    <Container className='border'>
+      <Line
+        options={options}
+        data={data}
+        style={{vh:50}}
+        datasetIdKey="id"
+      />
     </Container>
   )
 }
