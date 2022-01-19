@@ -102,14 +102,16 @@ const GoalChart = ({day, month, year, currentUser}) => {
   };
 
   return(
-    <Container className='border'>
-      <Line
-        options={options}
-        data={data}
-        style={{vh:50}}
-        datasetIdKey="id"
-      />
-    </Container>
+    <>
+    </>
+    // <Container className='border'>
+    //   <Line
+    //     options={options}
+    //     data={data}
+    //     style={{vh:50}}
+    //     datasetIdKey="id"
+    //   />
+    // </Container>
   )
 }
 

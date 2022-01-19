@@ -16,7 +16,8 @@ function App() {
   useEffect(() => {
     fetch("/api/me").then((r) => {
       if (r.ok) {
-        r.json().then((user) => setCurrentUser(user));
+        r.json().then((user) => setCurrentUser(user))
+        .then(console.log(user));
       }
     });
   }, []);
@@ -52,7 +53,7 @@ function App() {
     setCurrentUser(updatedUserInfo)
     navigate('/')
   }
-    
+   
   const deleteCheckIn = (deletedCheckIn) => {
     const updatedUserInfo = {...currentUser}
     updatedUserInfo.check_ins = currentUser.check_ins.filter(checkIn => checkIn.id !== deletedCheckIn.id)
