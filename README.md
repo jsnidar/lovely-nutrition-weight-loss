@@ -32,25 +32,42 @@ Users begin by creating an account using the Sign Up form. There are validations
 
 ### Log Out
 
+Users logout by clicking the logout button in the navbar.
+
 ### Check Ins
 
 #### Create Check In
 
-#### Show/Hide Goals
+Users create a check in by clicking on the Create a Check In button. This directs them to the Create Check In form where they enter information about their check in. Submitting the form creates a new check in. 
+
+#### Show/Hide Check Ins
+
+Users click on the Show Check Ins button to see cards for their check ins with the most recent check in first. Clicking on the button changes it to the Hide Check Ins button, by clicking it again they will hide the checkins.
 
 #### Edit Check In
 
+Users edit a check in by clicking the Edit button on the check in card. This will direct them to the Edit Check In form with the current data for that check in loaded. Submitting the form updates the check in.
+
 #### Delete Check In
+
+Users delete a check in by clicking the Delete button on the check in card. 
 
 ### Goals
 
 #### Show/Hide Goals
 
+Users click on the Show Goals button to see cards for their goals with the most recent goal first. Clicking on the button changes it to the Hide Goals button, by clicking it again they will hide the checkins.
+
 #### Create Goal
+Users create a goal by clicking on the Create a Goal button. This directs them to the Goal Form where they enter information about their goal. Submitting the form creates a new goal. 
 
 #### Edit Goal
 
+Users edit a goal by clicking the Edit button on the goal card. This will direct them to the Edit Goal form with the current data for that goal loaded. Submitting the form updates the goal.
+
 #### Delete Goal
+
+Users delete a check in by clicking the Delete button on the Goal card. 
 
 ## Contributing
 
