@@ -22,10 +22,11 @@ const GoalCard = ({ goalInfo, deleteGoal, checkIns }) => {
     checkIns[checkIns.length -1].weight <= goalInfo.goal_weight : 
     false
 
-  const lbsToLose = checkIns[checkIns.length -1].weight - goalInfo.goal_weight
+
+  const lbsToLose = checkIns.length > 0 ? checkIns[checkIns.length -1].weight - goalInfo.goal_weight : ""
   const startDate = goalInfo.goal_start_date
   const endDate = goalInfo.goal_end_date
-  const lastCheckin = checkIns[checkIns.length -1]
+  const lastCheckin =  checkIns.length > 0 ? checkIns[checkIns.length -1] : ''
 
   const handleDeleteGoal = () => {
     fetch(`/api/goals/${goalInfo.id}`, {
