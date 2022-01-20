@@ -19,7 +19,7 @@ function App() {
       }
     });
   }, []);
-
+  console.log(currentUser)
   if (!currentUser) return <LogIn setCurrentUser={setCurrentUser} />;
 
   const updateGoals = (goal, goalId) => {

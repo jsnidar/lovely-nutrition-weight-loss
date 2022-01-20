@@ -52,7 +52,10 @@ const GoalsContainer = ({ month, day, year, currentUser, deleteGoal, }) => {
       key={goal.id} 
       goalInfo={goal} 
       deleteGoal={deleteGoal} 
-      checkIns={goalCheckIns} 
+      checkIns={goalCheckIns}
+      day={day}
+      month={month}
+      year={year}
     />
   })
 
