@@ -2,19 +2,17 @@
 import { useNavigate } from "react-router-dom"
 import { Card, Row, Col, Button } from "react-bootstrap"
 
-const GoalCard = ({ goalInfo, deleteGoal, checkIns, selectGoal }) => {
+const GoalCard = ({ 
+  goalInfo, 
+  deleteGoal, 
+  checkIns, 
+  selectGoal,
+  dateWithoutTime
+}) => {
 
   let navigate = useNavigate();
 
-  const year = (date) => date.slice(0,4)
-  const month = (date) => parseInt(date.slice(5,7)) - 1
-  const day = (date) => date.slice(8,10)
-
-  const formattedDate = (givenDate) => new Date(
-    year(givenDate),
-    month(givenDate),
-    day(givenDate)
-  ).toDateString();
+  const formattedDate = (givenDate) => dateWithoutTime(givenDate).toDateString();
 
   const metGoal = checkIns.length > 0 ? 
     checkIns[checkIns.length -1].weight <= goalInfo.goal_weight : 

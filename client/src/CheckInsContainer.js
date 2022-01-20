@@ -3,7 +3,7 @@ import { Container, Row, Button } from "react-bootstrap";
 import CheckInCard from "./CheckInCard";
 import { useState } from 'react';
 
-const CheckInsContainer = ({ day, month, year, currentUser, deleteCheckIn }) => {
+const CheckInsContainer = ({ dateWithoutTime, currentUser, deleteCheckIn }) => {
 
   const [showCheckIns, setShowCheckins] = useState(false)
   let navigate = useNavigate()
@@ -14,9 +14,7 @@ const CheckInsContainer = ({ day, month, year, currentUser, deleteCheckIn }) => 
     key={checkIn.id} 
     checkInInfo={checkIn} 
     deleteCheckIn={deleteCheckIn}
-    year={year}
-    month={month}
-    day={day} 
+    dateWithoutTime={dateWithoutTime} 
   />)
 
   return (

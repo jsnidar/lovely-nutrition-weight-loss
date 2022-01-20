@@ -2,7 +2,7 @@ import { Container, Row, Image } from 'react-bootstrap';
 import GoalsContainer from "./GoalsContainer";
 import CheckInsContainer from './CheckInsContainer';
 
-const Home = ({ day, month, year, currentUser, deleteCheckIn, deleteGoal}) => {
+const Home = ({ dateWithoutTime, currentUser, deleteCheckIn, deleteGoal}) => {
 
   return (
     <Container className='p-2'>
@@ -11,16 +11,12 @@ const Home = ({ day, month, year, currentUser, deleteCheckIn, deleteGoal}) => {
         <h1>Weight Loss Tracker</h1>
       </Row>
       {currentUser.check_ins.length > 0 ? <GoalsContainer 
-        year={year}
-        month={month}
-        day={day}
+        dateWithoutTime={dateWithoutTime}
         currentUser={currentUser} 
         deleteGoal={deleteGoal} 
       /> : null }
       <CheckInsContainer 
-        year={year}
-        month={month}
-        day={day}
+        dateWithoutTime={dateWithoutTime}
         currentUser={currentUser}
         deleteCheckIn={deleteCheckIn}
       />

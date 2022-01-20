@@ -62,6 +62,12 @@ function App() {
   const month = (date) => parseInt(date.slice(5,7)) - 1
   const day = (date) => date.slice(8,10)
 
+  const dateWithoutTime = (givenDate) => new Date(
+    year(givenDate),
+    month(givenDate),
+    day(givenDate)
+  );
+
   return (
     <div>
       <NavBar 
@@ -76,9 +82,7 @@ function App() {
               deleteCheckIn={deleteCheckIn}
               deleteGoal={deleteGoal}
               currentUser={currentUser}
-              year={year}
-              month={month}
-              day={day} 
+              dateWithoutTime={dateWithoutTime} 
             />
           } 
         />

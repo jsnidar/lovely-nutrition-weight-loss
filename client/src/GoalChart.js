@@ -9,19 +9,11 @@ import {enGB} from 'date-fns/locale';
 
 ChartJS.register(...registerables);
 
-const GoalChart = ({day, month, year, currentUser, selectedGoal}) => {
+const GoalChart = ({dateWithoutTime, selectedGoal, currentUser}) => {
   
-  const startDate = new Date(
-    year(selectedGoal.goal_start_date),
-    month(selectedGoal.goal_start_date),
-    day(selectedGoal.goal_start_date)
-  )
+  const startDate = dateWithoutTime(selectedGoal.goal_start_date)
 
-  const endDate = new Date(
-    year(selectedGoal.goal_end_date),
-    month(selectedGoal.goal_end_date),
-    day(selectedGoal.goal_end_date)
-  )
+  const endDate = dateWithoutTime(selectedGoal.goal_end_date)
   
   let goalCheckIns = selectedGoal.goal_check_ins.map(checkIn => {
     return {x: checkIn.date, y: checkIn.weight}
@@ -32,7 +24,7 @@ const GoalChart = ({day, month, year, currentUser, selectedGoal}) => {
   })
 
   let currentWeight = goalCheckIns.length > 0 ? goalCheckIns[0].y : currentUser.check_ins.sort(function(a,b){
-    return new Date(year(a.date),month(a.date),day(a.date)).valueOf() - new Date(year(b.date),month(b.date),day(b.date)).valueOf();
+    return dateWithoutTime(a.date).valueOf() - dateWithoutTime(b.date).valueOf();
   })[currentUser.check_ins.length -1].weight
 
   const options = {

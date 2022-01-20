@@ -4,18 +4,18 @@ import { useNavigate } from 'react-router-dom';
 import GoalChart from "./GoalChart";
 import GoalCard from "./GoalCard";
 
-const GoalsContainer = ({ month, day, year, currentUser, deleteGoal, }) => {
+const GoalsContainer = ({ dateWithoutTime, currentUser, deleteGoal, }) => {
   
   const [selectedGoal, setSelectedGoal] = useState(
     currentUser.goals.sort(function(a,b){
-      return new Date(year(a.goal_end_date),month(a.goal_end_date),day(a.goal_end_date)) - new Date(year(b.goal_end_date),month(b.goal_end_date),day(b.goal_end_date));
+      return dateWithoutTime(a.goal_end_date) - dateWithoutTime(b.goal_end_date);
     })[currentUser.goals.length -1]
   )
   const [showGoals, setShowGoals] = useState(false)
   let navigate = useNavigate()
 
   const selectGoal = (goal) => setSelectedGoal(goal)
-  
+
   let renderGoals = currentUser.goals.sort(function(a,b){
     return new Date(b.date) - new Date(a.date);
   })
@@ -33,9 +33,7 @@ const GoalsContainer = ({ month, day, year, currentUser, deleteGoal, }) => {
       goalInfo={goal} 
       deleteGoal={deleteGoal} 
       checkIns={goalCheckIns}
-      day={day}
-      month={month}
-      year={year}
+      dateWithoutTime={dateWithoutTime}
       selectGoal={selectGoal}
       
     />
@@ -50,9 +48,7 @@ const GoalsContainer = ({ month, day, year, currentUser, deleteGoal, }) => {
         <Row>
           {currentUser.goals.length > 0 ? 
             <GoalChart
-              day={day}
-              month={month}
-              year={year}
+              dateWithoutTime={dateWithoutTime}
               currentUser={currentUser}
               selectedGoal={selectedGoal}
               deleteGoal={deleteGoal}

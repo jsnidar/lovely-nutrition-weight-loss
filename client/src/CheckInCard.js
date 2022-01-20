@@ -2,15 +2,12 @@
 import { useNavigate } from "react-router-dom"
 import { Card, Row, Col, Button } from "react-bootstrap"
 
-const CheckInCard = ({ day, month, year, checkInInfo, deleteCheckIn }) => {
+const CheckInCard = ({ dateWithoutTime, checkInInfo, deleteCheckIn }) => {
 
   let navigate = useNavigate();
 
-  const formattedDate = (givenDate) => new Date(
-    year(givenDate),
-    month(givenDate),
-    day(givenDate)
-  ).toDateString();
+  const formattedDate = (givenDate) => dateWithoutTime(givenDate).toDateString();
+
 
   const handleDeleteCheckIn = () => {
     fetch(`/check_ins/${checkInInfo.id}`, {
