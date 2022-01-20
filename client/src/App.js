@@ -10,10 +10,11 @@ import { Route, Routes, useNavigate } from "react-router-dom"
 function App() {
 
   const [currentUser, setCurrentUser] = useState(null)
+  
   let navigate = useNavigate()
 
   useEffect(() => {
-    fetch("/me").then((r) => {
+    fetch("/api/me").then((r) => {
       if (r.ok) {
         r.json().then((user) => setCurrentUser(user));
       }
@@ -51,7 +52,7 @@ function App() {
     setCurrentUser(updatedUserInfo)
     navigate('/')
   }
-    
+   
   const deleteCheckIn = (deletedCheckIn) => {
     const updatedUserInfo = {...currentUser}
     updatedUserInfo.check_ins = currentUser.check_ins.filter(checkIn => checkIn.id !== deletedCheckIn.id)

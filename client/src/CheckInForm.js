@@ -1,5 +1,5 @@
 
-import { Form, Container, Row, Col, Button } from 'react-bootstrap';
+import { Form, Container, Row, Col, Button, Image } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
 import ErrorAlert from './ErrorAlert';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -24,7 +24,7 @@ const CheckInForm = ({updateCheckIns}) => {
 
   useEffect(() => {
     if(checkInId) {
-      fetch(`/check_ins/${checkInId}`)
+      fetch(`/api/check_ins/${checkInId}`)
       .then(r => r.json())
       .then(checkIn => {
         const formattedCheckIn = {
@@ -58,7 +58,7 @@ const CheckInForm = ({updateCheckIns}) => {
   const renderMeasurements = measurementDropDownValues.map(value => <option key={value} value={value}>{value}</option>)
   
   const editCheckIn = () => {
-    fetch(`/check_ins/${checkInId}`, {
+    fetch(`/api/check_ins/${checkInId}`, {
       method: "PATCH",
       headers: {'Content-Type':'application/json'},
       body:JSON.stringify(formData)
@@ -75,7 +75,7 @@ const CheckInForm = ({updateCheckIns}) => {
   }
 
   const createCheckIn = () => {
-    fetch('/check_ins', {
+    fetch('/api/check_ins', {
       method: "POST",
       headers: {'Content-Type':'application/json'},
       body:JSON.stringify(formData)
@@ -99,7 +99,9 @@ const CheckInForm = ({updateCheckIns}) => {
 
   return (
     <Container>
-      <br></br>
+      <Row className='p-2'>
+        <Image src="/lovely_logo.png" />
+      </Row>
       <Form>
         <Row>
           { checkInId ? <h1>Edit Check In</h1> : <h1>Create a New Check In</h1> }
@@ -107,19 +109,20 @@ const CheckInForm = ({updateCheckIns}) => {
         </Row>
         <Row>
           <Form.Group className="mb-3" controlId="date">
-            <Form.Label>Date</Form.Label>
+            <Form.Label>Date*</Form.Label>
             <Form.Control 
               type="date" 
               placeholder="Enter measurement in inches" 
               value={formData.date}
               onChange={e => setFormData({...formData, date: e.target.value})}
             />
+            <Form.Text className="text-muted">Required</Form.Text>
           </Form.Group>
         </Row>
         <Row>
           <Col>
             <Form.Group className="mb-3" controlId="weight">
-              <Form.Label>Weight (lbs)</Form.Label>
+              <Form.Label>Weight (lbs)*</Form.Label>
               <Form.Control 
                 type="number" 
                 placeholder="Enter weight (lbs)"
@@ -128,6 +131,7 @@ const CheckInForm = ({updateCheckIns}) => {
                   {...formData, weight: parseInt(e.target.value)}
                 )}
               />
+              <Form.Text className="text-muted">Required</Form.Text>
             </Form.Group>
           </Col>
           <Col>

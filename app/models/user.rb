@@ -5,6 +5,6 @@ class User < ApplicationRecord
   validates :height, numericality: { greater_than: 36 }
   validates :username, uniqueness: true 
 
-  has_many :check_ins
-  has_many :goals 
+  has_many :check_ins, dependent: :destroy
+  has_many :goals, dependent: :destroy
 end

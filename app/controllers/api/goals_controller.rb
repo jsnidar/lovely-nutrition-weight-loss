@@ -1,4 +1,4 @@
-class GoalsController < ApplicationController
+class Api::GoalsController < ApplicationController
 
   def create
     goal = @current_user.goals.create!(goal_params)

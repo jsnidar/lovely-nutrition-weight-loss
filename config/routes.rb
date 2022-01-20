@@ -1,15 +1,14 @@
 Rails.application.routes.draw do
-  
+
   namespace :api do
     resources :check_ins, only: [:create, :show, :update, :destroy]
     resources :goals, except: [:new, :edit]
-
+    resources :users, only: [:update, :destroy]
+    
     post "/signup", to: "users#create"
     get "/me", to: "users#show"
-    patch "/users/:id", to: "users#update"
-    delete "users/:id", to: "users#destroy"
     post "/login", to: "sessions#create"
-    delete "/logout", to: "sessions#destroy"
+    delete "logout", to: "sessions#destroy"
   end
 
   # Routing logic: fallback requests for React Router.

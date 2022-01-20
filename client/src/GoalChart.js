@@ -9,6 +9,7 @@ import {enGB} from 'date-fns/locale';
 
 ChartJS.register(...registerables);
 
+
 const GoalChart = ({dateWithoutTime, selectedGoal, currentUser}) => {
   
   const startDate = dateWithoutTime(selectedGoal.goal_start_date)
@@ -17,6 +18,7 @@ const GoalChart = ({dateWithoutTime, selectedGoal, currentUser}) => {
   
   let goalCheckIns = selectedGoal.goal_check_ins.map(checkIn => {
     return {x: checkIn.date, y: checkIn.weight}
+
   })
   
   goalCheckIns = goalCheckIns.sort(function(a,b){
@@ -77,6 +79,7 @@ const GoalChart = ({dateWithoutTime, selectedGoal, currentUser}) => {
       {
         label: 'Goal',
         data: [{x: startDate, y: currentWeight}, {x: endDate, y:selectedGoal.goal_weight}],
+
         borderColor: '#FFCE0E',
         backgroundColor: '#FFCE0E',
         borderDash: [3]

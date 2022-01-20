@@ -25,7 +25,7 @@ const GoalCard = ({
   const lastCheckin =  checkIns.length > 0 ? checkIns[checkIns.length -1] : ''
 
   const handleDeleteGoal = () => {
-    fetch(`/goals/${goalInfo.id}`, {
+    fetch(`/api/goals/${goalInfo.id}`, {
       method: "DELETE"
     })
     .then(res => {

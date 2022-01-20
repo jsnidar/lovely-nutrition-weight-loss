@@ -15,7 +15,7 @@ const SignInForm = ({ setCurrentUser }) => {
   const handleSignInSubmit = (e) => {
     e.preventDefault()
     setErrors(null)
-    fetch('/login', {
+    fetch('/api/login', {
       method: "POST",
       headers: {'Content-Type':'application/json'},
       body:JSON.stringify(formData)
@@ -56,7 +56,7 @@ const SignInForm = ({ setCurrentUser }) => {
             <Form.Label>Password</Form.Label>
             <Form.Control 
               type="password" 
-              placeholder="Create a password" 
+              placeholder="Enter Password" 
               value={formData.password}
               onChange={e => setFormData({...formData, password: e.target.value})}
             />

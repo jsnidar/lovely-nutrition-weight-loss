@@ -1,4 +1,4 @@
-import { Form, Container, Row, Col, Button } from 'react-bootstrap';
+import { Form, Container, Row, Col, Button, Image } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
 import ErrorAlert from './ErrorAlert';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -21,14 +21,14 @@ const GoalForm = ({currentUser, updateGoals }) => {
 
   useEffect(() => {
     if(goalId) {
-      fetch(`/goals/${goalId}`)
+      fetch(`/api/goals/${goalId}`)
       .then(r => r.json())
       .then(goal => setFormData(goal))
     }
   }, [goalId])
   
   const editGoal = () => {
-    fetch(`/goals/${goalId}`, {
+    fetch(`/api/goals/${goalId}`, {
       method: "PATCH",
       headers: {'Content-Type':'application/json'},
       body:JSON.stringify(formData)
@@ -44,7 +44,7 @@ const GoalForm = ({currentUser, updateGoals }) => {
   }
 
   const createGoal = () => {
-    fetch('/goals', {
+    fetch('/api/goals', {
       method: "POST",
       headers: {'Content-Type':'application/json'},
       body:JSON.stringify(formData)
@@ -72,7 +72,9 @@ const GoalForm = ({currentUser, updateGoals }) => {
 
   return (
     <Container>
-      <br></br>
+      <Row className='p-2'>
+        <Image src="/lovely_logo.png" />
+      </Row>
       <Form>
         <Row>
           { goalId ? <h1>Edit Goal</h1> : <h1>Create a Goal</h1> }

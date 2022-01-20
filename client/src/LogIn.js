@@ -11,20 +11,22 @@ const LogIn = ({ setCurrentUser }) => {
   return (
     <>
       <Container>
-        <Image src="JacquelynKPhotography_LovelyNutritionLogo_BLACK.png" fluid />
-
-        { showSignIn ? (<>
-          <SignInForm setCurrentUser={setCurrentUser} />
-          <br></br>
-          <p>
-            Don't have an account? <Button 
-              variant='link' 
-              onClick={() => setShowSignIn(false)}
-            >   
-              Sign Up Now
-            </Button>
-          </p>
-        </>) : (
+        <Image src="/lovely_logo.png" fluid />
+        <h1>Weight Loss Tracker</h1>  
+        { showSignIn ? (
+          <>
+            <SignInForm setCurrentUser={setCurrentUser} />
+            <br></br>
+            <p>
+              Don't have an account? <Button 
+                variant='link' 
+                onClick={() => setShowSignIn(false)}
+              >   
+                Sign Up Now
+              </Button>
+            </p>
+          </>
+        ) : (
           <>
             <SignUpForm setCurrentUser={setCurrentUser} />
             <br></br>
