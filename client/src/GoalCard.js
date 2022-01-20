@@ -1,11 +1,9 @@
 
-import { useState } from "react";
 import { useNavigate } from "react-router-dom"
 import { Card, Row, Col, Button } from "react-bootstrap"
 
-const GoalCard = ({ goalInfo, deleteGoal, checkIns }) => {
+const GoalCard = ({ goalInfo, deleteGoal, checkIns, selectGoal }) => {
 
-  const [errors, setErrors] = useState(null)
   let navigate = useNavigate();
 
   const year = (date) => date.slice(0,4)
@@ -22,10 +20,11 @@ const GoalCard = ({ goalInfo, deleteGoal, checkIns }) => {
     checkIns[checkIns.length -1].weight <= goalInfo.goal_weight : 
     false
 
-  const lbsToLose = checkIns[checkIns.length -1].weight - goalInfo.goal_weight
+
+  const lbsToLose = checkIns.length > 0 ? checkIns[checkIns.length -1].weight - goalInfo.goal_weight : ""
   const startDate = goalInfo.goal_start_date
   const endDate = goalInfo.goal_end_date
-  const lastCheckin = checkIns[checkIns.length -1]
+  const lastCheckin =  checkIns.length > 0 ? checkIns[checkIns.length -1] : ''
 
   const handleDeleteGoal = () => {
     fetch(`/goals/${goalInfo.id}`, {
@@ -35,8 +34,6 @@ const GoalCard = ({ goalInfo, deleteGoal, checkIns }) => {
       if(res.ok){
         res.json()
         .then(() => deleteGoal(goalInfo));
-      }else{
-        res.json().then(e => setErrors(e))
       }
     })
   }
@@ -94,6 +91,10 @@ const GoalCard = ({ goalInfo, deleteGoal, checkIns }) => {
           variant='warning' 
           onClick={() => navigate(`/goals/${goalInfo.id}/edit`)}
         >Edit</Button>
+        <Button 
+          variant='warning' 
+          onClick={() => selectGoal(goalInfo)}
+        >View in Chart</Button>
       </Card.Body>
     </Card>
   )

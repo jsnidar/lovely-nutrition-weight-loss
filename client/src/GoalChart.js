@@ -9,37 +9,28 @@ import {enGB} from 'date-fns/locale';
 
 ChartJS.register(...registerables);
 
-const GoalChart = ({day, month, year, currentUser}) => {
-
-  const currentGoal = currentUser.goals.sort(function(a,b){
-    return new Date(year(a.goal_end_date),month(a.goal_end_date),day(a.goal_end_date)) - new Date(year(b.goal_end_date),month(b.goal_end_date),day(b.goal_end_date));
-  })[currentUser.goals.length -1]
-
+const GoalChart = ({day, month, year, currentUser, selectedGoal}) => {
+  
   const startDate = new Date(
-    year(currentGoal.goal_start_date),
-    month(currentGoal.goal_start_date),
-    day(currentGoal.goal_start_date)
+    year(selectedGoal.goal_start_date),
+    month(selectedGoal.goal_start_date),
+    day(selectedGoal.goal_start_date)
   )
 
   const endDate = new Date(
-    year(currentGoal.goal_end_date),
-    month(currentGoal.goal_end_date),
-    day(currentGoal.goal_end_date)
+    year(selectedGoal.goal_end_date),
+    month(selectedGoal.goal_end_date),
+    day(selectedGoal.goal_end_date)
   )
-
-  let goalCheckIns = []
-  currentUser.check_ins.forEach(checkIn => {
-    const checkInDate = new Date(year(checkIn.date),month(checkIn.date),day(checkIn.date))
-    if(checkInDate.valueOf() >= startDate.valueOf() && checkInDate.valueOf() <= endDate.valueOf()){
-      goalCheckIns.push({x: checkIn.date, y: checkIn.weight})
-    }
+  
+  let goalCheckIns = selectedGoal.goal_check_ins.map(checkIn => {
+    return {x: checkIn.date, y: checkIn.weight}
   })
   
   goalCheckIns = goalCheckIns.sort(function(a,b){
     return new Date(a.x.valueOf()) - new Date(b.x.valueOf());
-  }).map(checkIn => { 
-    return {x: checkIn.x, y: checkIn.y}})
-  
+  })
+
   let currentWeight = goalCheckIns.length > 0 ? goalCheckIns[0].y : currentUser.check_ins.sort(function(a,b){
     return new Date(year(a.date),month(a.date),day(a.date)).valueOf() - new Date(year(b.date),month(b.date),day(b.date)).valueOf();
   })[currentUser.check_ins.length -1].weight
@@ -77,7 +68,7 @@ const GoalChart = ({day, month, year, currentUser}) => {
       legend: {position: 'top'},
       title: {
         display: true,
-        text: currentGoal.goal_name,
+        text: selectedGoal.goal_name,
       },
     },
   };
@@ -93,7 +84,7 @@ const GoalChart = ({day, month, year, currentUser}) => {
       },
       {
         label: 'Goal',
-        data: [{x: startDate, y: currentWeight}, {x: endDate, y:currentGoal.goal_weight}],
+        data: [{x: startDate, y: currentWeight}, {x: endDate, y:selectedGoal.goal_weight}],
         borderColor: '#FFCE0E',
         backgroundColor: '#FFCE0E',
         borderDash: [3]

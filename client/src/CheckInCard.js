@@ -1,11 +1,9 @@
 
-import { useState } from "react";
 import { useNavigate } from "react-router-dom"
 import { Card, Row, Col, Button } from "react-bootstrap"
 
 const CheckInCard = ({ day, month, year, checkInInfo, deleteCheckIn }) => {
 
-  const [errors, setErrors] = useState(null)
   let navigate = useNavigate();
 
   const formattedDate = (givenDate) => new Date(
@@ -22,8 +20,6 @@ const CheckInCard = ({ day, month, year, checkInInfo, deleteCheckIn }) => {
       if(res.ok){
         res.json()
         .then(() => deleteCheckIn(checkInInfo));
-      }else{
-        res.json().then(e => setErrors(e))
       }
     })
   }

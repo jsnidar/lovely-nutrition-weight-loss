@@ -5,48 +5,28 @@ import GoalChart from "./GoalChart";
 import GoalCard from "./GoalCard";
 
 const GoalsContainer = ({ month, day, year, currentUser, deleteGoal, }) => {
-
+  
+  const [selectedGoal, setSelectedGoal] = useState(
+    currentUser.goals.sort(function(a,b){
+      return new Date(year(a.goal_end_date),month(a.goal_end_date),day(a.goal_end_date)) - new Date(year(b.goal_end_date),month(b.goal_end_date),day(b.goal_end_date));
+    })[currentUser.goals.length -1]
+  )
   const [showGoals, setShowGoals] = useState(false)
   let navigate = useNavigate()
 
-
+  const selectGoal = (goal) => setSelectedGoal(goal)
+  
   let renderGoals = currentUser.goals.sort(function(a,b){
     return new Date(b.date) - new Date(a.date);
   })
   
   renderGoals = renderGoals.map(goal => {
-    const startDate = new Date(
-      year(goal.goal_start_date),
-      month(goal.goal_start_date),
-      day(goal.goal_start_date)
-    )
-  
-    const endDate = new Date(
-      year(goal.goal_end_date),
-      month(goal.goal_end_date),
-      day(goal.goal_end_date)
-    )
     
-    let goalCheckIns = []
-
-    currentUser.check_ins.forEach(checkIn => {
-      const checkInDate = new Date(
-        year(checkIn.date),
-        month(checkIn.date),
-        day(checkIn.date)
-      )
-
-      if(
-        checkInDate.valueOf() >= startDate.valueOf() && 
-        checkInDate.valueOf() <= endDate.valueOf()
-      ){
-        goalCheckIns.push(checkIn)
+    const goalCheckIns = goal.goal_check_ins.sort(
+      function(a,b){
+        return new Date(a.date.valueOf()) - new Date(b.date.valueOf());
       }
-    })
-
-    goalCheckIns = goalCheckIns.sort(function(a,b){
-      return new Date(a.date.valueOf()) - new Date(b.date.valueOf());
-    })
+    )
 
     return <GoalCard 
       key={goal.id} 
@@ -56,6 +36,8 @@ const GoalsContainer = ({ month, day, year, currentUser, deleteGoal, }) => {
       day={day}
       month={month}
       year={year}
+      selectGoal={selectGoal}
+      
     />
   })
 
@@ -71,7 +53,8 @@ const GoalsContainer = ({ month, day, year, currentUser, deleteGoal, }) => {
               day={day}
               month={month}
               year={year}
-              currentUser={currentUser} 
+              currentUser={currentUser}
+              selectedGoal={selectedGoal}
               deleteGoal={deleteGoal}
             /> : null
           }
